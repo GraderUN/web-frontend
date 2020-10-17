@@ -56,6 +56,18 @@ export const constantRoutes = [
   },
 
   {
+    path: '/prueba',
+    component: Layout,
+    redirect: '/prueba/query',
+    children: [{
+      path: 'query',
+      name: 'queryExample',
+      component: () => import('@/views/Example/index'),
+      meta: { title: 'GrapghQL', icon: 'dashboard' }
+    }]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
