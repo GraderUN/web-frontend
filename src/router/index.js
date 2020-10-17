@@ -128,6 +128,20 @@ export const constantRoutes = [
     }]
   },
 
+  // Subject Routes
+  {
+    path: '/subject',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: () => import('@/views/form_subject/index'),
+        meta: { title: 'Subject', icon: 'form' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
