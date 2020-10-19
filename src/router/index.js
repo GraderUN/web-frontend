@@ -79,6 +79,28 @@ export const constantRoutes = [
   },
 
   {
+    path: '/schedule',
+    component: Layout,
+    redirect: '/',
+    name: 'Schedule',
+    meta: { title: 'Schedule', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'schedule',
+        name: 'Schedule',
+        component: () => import('@/views/schedule/schedule'),
+        meta: { title: 'Schedule', icon: 'table' }
+      },
+      {
+        path: 'student',
+        name: 'Student',
+        component: () => import('@/views/schedule/student/studentGrades'),
+        meta: { title: 'Student', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
