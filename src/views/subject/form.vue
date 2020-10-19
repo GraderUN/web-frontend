@@ -7,10 +7,10 @@
 
       <el-form-item label="Subject grade">
         <el-input-number
+          v-model="form.grade"
           :min="-1"
           :max="11"
           controls-position="right"
-          v-model="form.grade"
         />
       </el-form-item>
 
@@ -23,17 +23,22 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
 export default {
   data() {
     return {
       form: {
         name: '',
-        grade: 0,
+        grade: 0
       }
     }
   },
+  // apollo: {},
   methods: {
     onSubmit() {
+      console.log(this.form.name, this.form.grade)
+      this.createSubject()
       this.$message('submit!')
     },
     onCancel() {
@@ -41,6 +46,22 @@ export default {
         message: 'cancel!',
         type: 'warning'
       })
+    },
+    async createSubject() {
+      const result = await this.$apollo.mutate({
+        mutation: gql`
+          mutation($data: SubjectInput!){
+            postSubject(data: $data){
+              rows
+              response
+            }
+          }
+        `,
+        variables: {
+          data: this.form
+        }
+      })
+
     }
   }
 }
