@@ -14,6 +14,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import { createProvider } from './vue-apollo'
 
 // import { createProvider } from './vue-apollo';
 import { ApolloClient } from 'apollo-client'
@@ -64,5 +65,6 @@ new Vue({
   apolloProvider,
   router,
   store,
+  apolloProvider: createProvider(),
   render: h => h(App)
 })
