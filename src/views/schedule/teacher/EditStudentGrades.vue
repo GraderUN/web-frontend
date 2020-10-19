@@ -11,11 +11,10 @@
       <el-table-column label="Porcentaje" width="100" align="center" prop="porcentaje" />
       <el-table-column label="Periodo" width="100" align="center" prop="periodo" />
       <el-table-column label="Comentarios" align="center" prop="comentarios" />
+      <el-table-column label="Ver materia" align="center">
+        <el-button type="text" size="small" @click="handleClick">Editar nota</el-button>
+      </el-table-column>
     </el-table>
-    <div>
-      <h1>Contenido de la materia</h1>
-      <h3>{{ contenido }}</h3>
-    </div>
   </div>
 </template>
 

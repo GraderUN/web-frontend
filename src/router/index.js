@@ -86,20 +86,37 @@ export const constantRoutes = [
     meta: { title: 'Schedule', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'schedule',
-        name: 'Schedule',
-        component: () => import('@/views/schedule/schedule'),
-        meta: { title: 'Schedule', icon: 'table' }
+        path: 'scheduleStudent',
+        name: 'ScheduleStudent',
+        component: () => import('@/views/schedule/student/schedule'),
+        meta: { title: 'ScheduleStudent', icon: 'table' }
       },
       {
         path: 'student',
         name: 'Student',
         component: () => import('@/views/schedule/student/studentGrades'),
         meta: { title: 'Student', icon: 'table' }
+      },
+      {
+        path: 'scheduleTeacher',
+        name: 'scheduleTeacher',
+        component: () => import('@/views/schedule/teacher/schedule'),
+        meta: { title: 'ScheduleTeacher', icon: 'table' }
+      },
+      {
+        path: 'Teacher',
+        name: 'Teacher',
+        component: () => import('@/views/schedule/teacher/TeacherGrades'),
+        meta: { title: 'Teacher', icon: 'table' }
+      },
+      {
+        path: 'EditStudentGrades',
+        name: 'EditStudentGrades',
+        component: () => import('@/views/schedule/teacher/EditStudentGrades'),
+        meta: { title: 'EditStudentGrades', icon: 'table' }
       }
     ]
   },
-
   {
     path: '/example',
     component: Layout,
