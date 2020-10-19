@@ -132,12 +132,23 @@ export const constantRoutes = [
   {
     path: '/subject',
     component: Layout,
+    name: 'Subject',
+    meta: {
+      title: 'Subject',
+      icon: 'nested'
+    },
     children: [
       {
-        path: 'index',
+        path: 'form',
         name: 'Form',
-        component: () => import('@/views/form_subject/index'),
-        meta: { title: 'Subject', icon: 'form' }
+        component: () => import('@/views/subject/form'),
+        meta: { title: 'Subject Form', icon: 'form' }
+      },
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/subject/list'),
+        meta: { title: 'Subject List', icon: 'table' }
       }
     ]
   },
