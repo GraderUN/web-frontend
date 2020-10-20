@@ -68,6 +68,17 @@ export const constantRoutes = [
   },
 
   {
+    path: '/cursos',
+    component: Layout,
+    children: [{
+      path: 'courses',
+      name: 'courses',
+      component: () => import('@/views/courses/index'),
+      meta: { title: 'Cursos', icon: 'dashboard' }
+    }]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
@@ -168,31 +179,6 @@ export const constantRoutes = [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  // Subject Routes
-  {
-    path: '/subject',
-    component: Layout,
-    name: 'Subject',
-    meta: {
-      title: 'Subject',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'form',
-        name: 'Form',
-        component: () => import('@/views/subject/form'),
-        meta: { title: 'Subject Form', icon: 'form' }
-      },
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/subject/list'),
-        meta: { title: 'Subject List', icon: 'table' }
       }
     ]
   },

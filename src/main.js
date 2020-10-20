@@ -14,7 +14,6 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import { createProvider } from './vue-apollo'
 
 // import { createProvider } from './vue-apollo';
 import { ApolloClient } from 'apollo-client'
@@ -38,6 +37,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
+
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
@@ -50,7 +50,7 @@ const httpLink = new HttpLink({
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
-  connectToDevTools: true
+  connectToDevTools: true,
 })
 
 Vue.use(VueApollo)
@@ -64,6 +64,5 @@ new Vue({
   apolloProvider,
   router,
   store,
-  apolloProvider: createProvider(),
   render: h => h(App)
 })
