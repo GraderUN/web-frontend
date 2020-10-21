@@ -86,6 +86,16 @@ export const constantRoutes = [
       meta: { title: 'Solicitud Estudiantes', icon: 'dashboard' }
     }]
   },
+  {
+    path: '/perfiles',
+    component: Layout,
+    children: [{
+      path: 'perfiles',
+      name: 'perfiles',
+      component: () => import('@/views/profiles/index'),
+      meta: { title: 'Perfiles', icon: 'dashboard' }
+    }]
+  },
 
   {
     path: '/example',

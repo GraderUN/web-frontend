@@ -1,135 +1,88 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-
-<template>
-  <div id="app" class="container">
-    <h4>
-      Todas las Tareas
-    </h4>
-
-    <!--      <ul>
-          <li v-for="task of tasks" v-bind:key="task">
-              {{ task.title }}
-          </li>
-      </ul>
-
-      <h4 v-if="pendingTasks.leght">
-          Tareas Pendientes
-      </h4>
-
-      <ul v-if="pendingTasks.leght">
-          <li v-for="task of pendingTasks" v-bind:key="task">
-              {{ task.title }}
-          </li>
-      </ul>
--->
-    <input v-model="new_task" type="text" class="form-control">
-    <button class="btn btn-primary" @v-on:click="createTask">Crear Tarea</button>
-  </div>
-</template>
-
-<script>
-
-var vm = new Vue({
-  el: '#app',
-  data: {
-    new_task: '',
-    tasks: [
-      {
-        title: 'Aprender js',
-        pending: false
-      },
-      {
-        title: 'prueba 1',
-        pending: false
-      },
-      {
-        title: 'Una más',
-        pending: false
-      }
-    ]
-  },
-  computed: {
-    pendingTasks: function() {
-      return this.tasks.filter(function(item) {
-        return item.pending
-      })
-    }
-  },
-  methods: {
-    createTask: function () {
-      this.tasks.push({
-        title: this.new_task,
-        pending: true
-      })
-      this.new_task = '';
-    }
-  }
-})
-
-// vm.name = 'Cristian';
-</script>
-
-<style scoped>
-
-</style>
-
-<!--
 <template>
   <div class="app-container">
-    <div style="font-size:25px; font-weight:bold; margin-bottom:20px">Añadir un curso</div>
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Grado">
-        <el-input-number v-model="form.grade" :min="0" :max="11"></el-input-number>
+    <div style="font-size:20px; font-weight:bold; margin-bottom:20px">Agregar solicitud de profesor</div>
+    <el-form ref="form" :model="form" label-width="200px">
+      <el-form-item label="ID Profesor" style="width: 800px">
+        <el-input v-model="form.idProfesor" />
       </el-form-item>
 
-      <el-form-item label="Letra">
-        <el-input v-model="form.letter" placeholder="Ingrese la letra del curso" maxlength="1" show-word-limit/>
+      <el-form-item label="Tipo de solicitud">
+        <el-select v-model="form.tipo" placeholder="Seleccion el tipo de solicitud" style="width: 600px">
+          <el-option v-for="(TipoSolicitud,index) in mockPossibleTipoSolictud" :key="index" :label="TipoSolicitud.name" :value="TipoSolicitud.name" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="Fecha">
+        <el-col :span="11">
+          <el-date-picker v-model="form.date1" type="date" placeholder="Escoge la fecha" style="width: 600px" />
+        </el-col>
+      </el-form-item>
+
+      <el-form-item label="Información Adicional" style="width: 800px">
+        <el-input v-model="form.descripcion" type="textarea" />
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Crear Curso</el-button>
+        <el-button type="primary" @click="onSubmit">Enviar solicitud</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
+
 export default {
+  name: 'TipoSolicitud',
   data() {
     return {
+      mockPossibleTipoSolictud: [
+        {
+          id: '1',
+          name: 'Aplazar año'
+        },
+        {
+          id: '2',
+          name: 'Certificado Notas'
+        },
+        {
+          id: '3',
+          name: 'Diploma Virtual'
+        },
+        {
+          id: '4',
+          name: 'Reunión Padres'
+        },
+        {
+          id: '5',
+          name: 'Mala Calificación'
+        }],
+      modalShow: false,
+      show: true,
+      tipoSeleccionado: null,
       form: {
-        grade: 0,
-        letter: '',
+        tipo: null
       }
     }
   },
   methods: {
-    async onSubmit() {
-      this.form.letter = this.form.letter.toUpperCase()
-      const result = await this.$apollo.mutate({
-        mutation: gql`
-          mutation ($course: CourseInput!) {
-            createCourse(course: $course){
-              id
-              grade
-              letter
-            }
-        }`,
-        variables: {
-            course: this.form
-        }
-      })
-      this.form.grade = 0
-      this.form.letter = ''
+    computed: {
+      validateState(name) {
+      }
+    },
+    onSubmit(evt) {
+      console.log('Se agregó el solicitud: ' + this.form.tipo)
+      evt.preventDefault()
+      this.close()
       this.$parent.reload()
+    },
+    close() {
+      this.form.student = ''
+      this.modalShow = false
     }
   }
 }
 </script>
 
-<style scoped>
-.line{
-  text-align: center;
-}
-</style> -->
+<style lang="scss" scoped>
+</style>

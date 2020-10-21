@@ -2,7 +2,7 @@
   <div class="app-container">
     <div style="font-size:20px; font-weight:bold; margin-bottom:20px">Agregar solicitud de estudiante</div>
     <el-form ref="form" :model="form" label-width="200px">
-      <el-form-item label="ID Estudiante">
+      <el-form-item label="ID Estudiante" style="width: 800px">
         <el-input v-model="form.name" />
       </el-form-item>
 
@@ -14,11 +14,11 @@
 
       <el-form-item label="Fecha">
         <el-col :span="11">
-          <el-date-picker v-model="form.date1" type="date" placeholder="Escoge la fecha" style="width: 100%;" />
+          <el-date-picker v-model="form.date1" type="date" placeholder="Escoge la fecha" style="width: 600px" />
         </el-col>
       </el-form-item>
 
-      <el-form-item label="Información Adicional">
+      <el-form-item label="Información Adicional" style="width: 800px">
         <el-input v-model="form.desc" type="textarea" />
       </el-form-item>
 
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 
 export default {
   name: 'TipoSolicitud',

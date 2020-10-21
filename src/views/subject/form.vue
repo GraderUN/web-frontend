@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 
 export default {
   data() {
@@ -48,7 +48,7 @@ export default {
       })
     },
     async createSubject() {
-      const result = await this.$apollo.mutate({
+      /* const result = await this.$apollo.mutate({
         mutation: gql`
           mutation($data: SubjectInput!){
             postSubject(data: $data){
@@ -60,7 +60,7 @@ export default {
         variables: {
           data: this.form
         }
-      })
+      }) */
     }
   }
 }

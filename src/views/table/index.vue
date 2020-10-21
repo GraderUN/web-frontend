@@ -40,7 +40,7 @@
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column> <button v-on:click="removeElement(item)">remove</button> </el-table-column>
+      <el-table-column> <button @v-on:click="removeElement(item)">remove</button> </el-table-column>
     </el-table>
 
     <el-button type="danger" @click="removeRequest(index)">Borrar Solicitud</el-button>
