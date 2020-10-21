@@ -222,6 +222,31 @@ export const constantRoutes = [
     ]
   },
 
+  // Subject Routes
+  {
+    path: '/subject',
+    component: Layout,
+    name: 'Subject',
+    meta: {
+      title: 'Subject',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'form',
+        name: 'Form',
+        component: () => import('@/views/subject/form'),
+        meta: { title: 'Subject Form', icon: 'form' }
+      },
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/subject/list'),
+        meta: { title: 'Subject List', icon: 'table' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
