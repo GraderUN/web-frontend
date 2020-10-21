@@ -8,6 +8,7 @@
       fit
       highlight-current-row
     >
+      <el-table-column prop="name" label="Name" type="selection" />
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
           {{ scope.$index }}
@@ -39,7 +40,12 @@
           <span>{{ scope.row.display_time }}</span>
         </template>
       </el-table-column>
+      <el-table-column> <button v-on:click="removeElement(item)">remove</button> </el-table-column>
     </el-table>
+
+    <el-button type="danger" @click="removeRequest(index)">Borrar Solicitud</el-button>
+
+    <el-button @click="removeElement(item)"> remove </el-button>
   </div>
 </template>
 
@@ -73,6 +79,12 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    removeRequest: function(index) {
+      this.items.splice(index, 1)
+    },
+    removeElement: function(item) {
+      this.items.$remove(item, 1)
     }
   }
 }

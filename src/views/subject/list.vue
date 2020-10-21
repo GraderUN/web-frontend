@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-table :data="getSubjects" border>
-      <el-table-column prop="id" label="ID" width="50px"> </el-table-column>
-      <el-table-column prop="name" label="Name" sortable> </el-table-column>
-      <el-table-column prop="grade" label="Grade" sortable> </el-table-column>
+      <el-table-column prop="id" label="ID" width="50px" />
+      <el-table-column prop="name" label="Name" sortable />
+      <el-table-column prop="grade" label="Grade" sortable />
     </el-table>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
         }
       }
     `
-  },
+  }
   // methods: {}
 }
 </script>

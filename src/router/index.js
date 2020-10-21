@@ -66,6 +66,26 @@ export const constantRoutes = [
       meta: { title: 'GrapghQL', icon: 'dashboard' }
     }]
   },
+  {
+    path: '/solicitud_profesor',
+    component: Layout,
+    children: [{
+      path: 'teacherRequest',
+      name: 'teacherRequest',
+      component: () => import('@/views/teacherRequest/index'),
+      meta: { title: 'Solicitud Profesores', icon: 'dashboard' }
+    }]
+  },
+  {
+    path: '/solicitud_estudiante',
+    component: Layout,
+    children: [{
+      path: 'studentRequest',
+      name: 'studentRequest',
+      component: () => import('@/views/studentRequest/index'),
+      meta: { title: 'Solicitud Estudiantes', icon: 'dashboard' }
+    }]
+  },
 
   {
     path: '/example',
