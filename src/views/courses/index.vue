@@ -10,36 +10,22 @@
       </el-collapse-item>
     </el-collapse>
 
-    <addCourse class="aux2"/>
+    <addCourse style="margin-top: 10px;"/>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import course from './specificCourse'
+import Course from './specificCourse'
 import AddCourse from './addCourseForm'
 import DeleteCourse from './deleteCourse'
-import Form from '../form/index'
 
 export default {
   name: 'Courses',
-  components: { course, AddCourse, DeleteCourse, Form},
+  components: { Course, AddCourse, DeleteCourse },
   data() {
     return {
       allCourses: [],
-      mockCourses: [{
-        grade: 1,
-        letter: "A"
-      },{
-        grade: 1,
-        letter: "B"
-      },{
-        grade: 1,
-        letter: "C"
-      },{
-        grade: 1,
-        letter: "D"
-      }],
       triggers: [false],
       activeName: '1'
     }
@@ -71,10 +57,6 @@ export default {
     margin-top: 30px;
     margin-left: 30px;
     margin-right: 30px;
-}
-
-.aux2{
-  margin-top: 10px;
 }
 
 </style>

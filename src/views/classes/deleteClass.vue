@@ -1,6 +1,6 @@
 <template>
-  <div class="aux">
-    <el-button type="danger" @click="warningMessage">Borrar Curso</el-button>
+  <div>
+    <el-button size="medium" type="danger" @click="warningMessage">Borrar Clase</el-button>
   </div>
 </template>
 
@@ -8,27 +8,27 @@
 import gql from 'graphql-tag'
 
 export default {
-  name: 'deleteCourse',
+  name: 'deleteClassroom',
   props:{
-    id: {
-      type: String,
-      default: '',
+    index: {
+      type: Number,
+      default: null,
       required: true
     },
-    course: {
-      type: String,
-      default: '',
+    row: {
+      type: Object,
+      default: null,
       required: true
     }
   },
   methods: {
     warningMessage(){
-      this.$confirm('¿Está seguro que desea borrar el curso '+ this.course +'?', 'Advertencia', {
+      this.$confirm('¿Está seguro que desea borrar la clase '+ this.index +'?', 'Advertencia', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
         type: 'warning'
       }).then(() => {
-        this.deleteCourse()
+        this.deleteClass()
         this.$message({
           type: 'success',
           message: 'Eliminación existosa'
@@ -36,8 +36,9 @@ export default {
       })
     },
 
-    async deleteCourse() {
-      await this.$apollo.mutate({ 
+    async deleteClass() {
+      console.log(this.row.id)
+      /*await this.$apollo.mutate({ 
         mutation: gql`
           mutation ($id: String!) {
             deleteCourse(id: $id){
@@ -49,12 +50,8 @@ export default {
         variables: {
           id:this.id
         }
-      }).then((data) => {
-        this.$emit('deleted')
-      }).catch((error) => {
-        console.error(error)
-      })
-      //new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
+      })*/
+      new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
     }
   }
 }

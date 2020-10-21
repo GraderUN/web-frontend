@@ -4,8 +4,8 @@
     <el-form ref="form" :model="form" label-width="200px">
 
       <el-form-item label="Estudiante a añadir">
-        <el-select v-model="form.estudiante" placeholder="Seleccion el estudiante que desea añadir al curso" style="width: 600px">
-          <el-option v-for="(student,index) in mockPossibleStudents" :key="index" :label="student.name" :value="student.id"></el-option>
+        <el-select v-model="form.id" placeholder="Seleccione el estudiante que desea añadir al curso" style="width: 600px">
+          <el-option v-for="(student,index) in studentsWithoutCourse" :key="index" :label="student.nombre+' '+student.apellido" :value="student.id"></el-option>
         </el-select>
       </el-form-item>
 
@@ -28,86 +28,71 @@ SE DEBE HACER DOS COSAS:
 
 export default {
   name: 'AddStudent',
+  props:{
+    id: {
+      type: String,
+      default: '',
+      required: true
+    },
+    update: {
+      type: Boolean,
+      default: false,
+      required: true
+    }
+  },
   data() {
     return {
-      mockPossibleStudents: [
-      {
-        id:'1',
-        name:'Pepito perez 5'
-      },
-      {
-        id:'2',
-        name:'Pepito perez 6'
-      },
-      {
-        id:'3',
-        name:'Pepito perez 7'
-      },
-      {
-        id:'4',
-        name:'Pepito perez 8'
-      },
-      {
-        id:'5',
-        name:'Pepito perez 9'
-      }],
-      modalShow: false,
-      show: true,
+      studentsWithoutCourse: [],
       selectedStudent: null,
       form:{
-          estudiante: null
+        id: null,
+        id_course: null
       }
     }
   },
   methods: {
-    validateState(name) {
-        
-    },
-
     onSubmit(evt) {
-      console.log("Se seleccionó el estudiante: "+ this.form.estudiante)
       evt.preventDefault()
-      /*this.$apollo.mutate({
-        data: gql`
-          mutation ($course: CourseInput!) {
-            createCourse(course: $course){
+      this.form.id = this.form.id.toString()
+      this.form.id_course = this.id
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation ($student: StudentInput!) {
+            createStudent(student: $student){
               id
-              grade
-              letter
+              id_course
             }
         }`, 
         variables: {
-            course: courses
-        },
-        update: (cache, { data: { insert_todos } }) => {
-          console.log(insert_todos);
+          student: this.form
         }
       }).then((data) => {
-        console.log(data)
+        this.$parent.reload()
+        this.$apollo.queries.studentsWithoutCourse.refetch()
       }).catch((error) => {
         console.error(error)
-      })*/
-      this.close()
-      this.$parent.reload()
-    },
-    close() {
-      this.form.student = ''
-      this.modalShow = false
+      })
+      this.form.id = null
+      this.form.id_course = null
     }
   },
-  computed: {
-    studentsWithoutCourse(){
-        var res = []
-        for(var i=0; i<this.mockPossibleStudents.length; i++){
-          res.push({
-            value: this.mockPossibleStudents[i].id,
-            text: this.mockPossibleStudents[i].name
-          })
+  apollo: {
+    studentsWithoutCourse: {
+      query: gql`query{
+        studentsWithoutCourse{
+          id
+          nombre
+          apellido
         }
-        return res
+      }`,
+      skip: false
+    }
+  },
+  watch: {
+    update: function(){
+      this.$apollo.queries.studentsWithoutCourse.refetch()
     }
   }
-  
 }
 </script>
 

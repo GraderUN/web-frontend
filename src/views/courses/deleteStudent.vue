@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     warningMessage(){
-      this.$confirm('¿Está seguro que desea quitar al estudiante '+ this.student.name +' del curso '+ this.course +'?', 'Advertencia', {
+      this.$confirm('¿Está seguro que desea quitar al estudiante '+ this.student.nombre + " " + this.student.apellido +' del curso '+ this.course +'?', 'Advertencia', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
         type: 'warning'
@@ -37,21 +37,22 @@ export default {
     },
     
     deleteStudent() {
-      //TERMINAR
-      // this.$apollo.mutate({ 
-      //   mutation: gql`
-      //     mutation ($id: String!) {
-      //       deleteCourse(id: $id){
-      //         id_students
-      //         grade
-      //         letter
-      //       }
-      //   }`, 
-      //   variables: {
-      //     id:this.id
-      //   }
-      // })
-      this.$parent.reload()
+      this.$apollo.mutate({ 
+        mutation: gql`
+          mutation ($id: String!) {
+            deleteStudent(id: $id){
+              id
+            }
+        }`, 
+        variables: {
+          id:this.student.id.toString()
+        }
+      }).then((data) => {
+        this.$emit('deleted')
+      }).catch((error) => {
+        console.error(error)
+      })
+      //new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
     }
   }
 }

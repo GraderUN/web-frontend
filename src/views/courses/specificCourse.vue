@@ -1,13 +1,13 @@
 <template>
-    <b-card-body>
-        <b-card-text>
-          <b-list-group-item  v-for="(student,index) in mockCourseStudents" :key="index">
-            <b class="student">{{ student.name +" "+ typeof student}} </b>
-            <deleteStudent class="aux" :student="student" :course="name"/>
-          </b-list-group-item>
-        </b-card-text>
-        <addStudent />
-    </b-card-body>
+    <div>
+      <el-card v-for="(student,index) in courseStudents" :key="index">
+        <div>
+          <span style="font-weight:300; font-size:20px; ">{{ student.nombre + " " + student.apellido }} </span>
+          <deleteStudent style="float: right; margin-bottom:20px" :student="student" :course="name" @deleted="stundentDeleted"/>
+        </div>
+      </el-card>
+      <addStudent :id="this.id" :update="this.updateAddStudents" style="margin-top:30px;"/>
+    </div>
 </template>
 
 <script>
@@ -36,33 +36,27 @@ export default {
   },
   data() {
     return {
-      courseStudents: null,
-      mockCourseStudents: [
-      {
-        name:'Pepito Perez 1'
-      },
-      {
-        name:'Pepito Perez 2'
-      },
-      {
-        name:'Pepito Perez 3'
-      },
-      {
-        name:'Pepito Perez 4'
-      }]
+      courseStudents: [],
+      updateAddStudents: true
     }
   },
   methods: {
     reload(){
-      this.$apollo.queries.allCourses.refetch()
+      this.$apollo.queries.courseStudents.refetch()
+    },
+    stundentDeleted(){
+      this.$apollo.queries.courseStudents.refetch()
+      this.updateAddStudents = !this.updateAddStudents
     }
-  },}
-  /*
+  },
+
   apollo: {
     courseStudents: {
       query: gql`query courseStudents($id: String!){
         courseStudents(id: $id){
+          id
           nombre
+          apellido
         }
       }`,
       variables () {
@@ -74,36 +68,13 @@ export default {
     },
     
   }
-}*/
+}
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
   }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
-
-.parentDiv{
-    margin-top: 30px;
-    margin-left: 30px;
-    margin-right: 30px;
-}
-
-.card{
-  border: 2px solid rgb(235, 235, 235);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.aux{
-  position: absolute;
-  top: 7.5%;
-  left: 90%;
-  width: 15%;
-}
 </style>
