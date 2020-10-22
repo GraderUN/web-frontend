@@ -68,17 +68,6 @@ export const constantRoutes = [
   },
 
   {
-    path: '/cursos',
-    component: Layout,
-    children: [{
-      path: 'courses',
-      name: 'courses',
-      component: () => import('@/views/courses/index'),
-      meta: { title: 'Cursos', icon: 'dashboard' }
-    }]
-  },
-
-  {
     path: '/schedule',
     component: Layout,
     redirect: '/',
@@ -117,6 +106,40 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/cursos',
+    component: Layout,
+    children: [{
+      path: 'courses',
+      name: 'courses',
+      component: () => import('@/views/courses/index'),
+      meta: { title: 'Cursos', icon: 'table' }
+    }]
+  },
+  
+  {
+    path: '/salones',
+    component: Layout,
+    children: [{
+      path: 'classrooms',
+      name: 'classrooms',
+      component: () => import('@/views/classrooms/index'),
+      meta: { title: 'Salones', icon: 'table' }
+    }]
+  },
+
+  {
+    path: '/clases',
+    component: Layout,
+    children: [{
+      path: 'classes',
+      name: 'classes',
+      component: () => import('@/views/classes/index'),
+      meta: { title: 'Clases', icon: 'table' }
+    }]
+  },
+
   {
     path: '/example',
     component: Layout,
@@ -218,31 +241,6 @@ export const constantRoutes = [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  // Subject Routes
-  {
-    path: '/subject',
-    component: Layout,
-    name: 'Subject',
-    meta: {
-      title: 'Subject',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'form',
-        name: 'Form',
-        component: () => import('@/views/subject/form'),
-        meta: { title: 'Subject Form', icon: 'form' }
-      },
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/subject/list'),
-        meta: { title: 'Subject List', icon: 'table' }
       }
     ]
   },

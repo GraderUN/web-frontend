@@ -1,57 +1,62 @@
 <template>
-    <b-card-body>
-        <b-card-text> {{id}} {{ courseById }}</b-card-text>
-    </b-card-body>
+    <div>
+      <el-card v-for="(student,index) in courseStudents" :key="index">
+        <div>
+          <span style="font-weight:300; font-size:20px; ">{{ student.nombre + " " + student.apellido }} </span>
+          <deleteStudent style="float: right; margin-bottom:20px" :student="student" :course="name" @deleted="stundentDeleted"/>
+        </div>
+      </el-card>
+      <addStudent :id="this.id" :update="this.updateAddStudents" style="margin-top:30px;"/>
+    </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import AddStudent from './addStudent'
+import DeleteStudent from './deleteStudent'
 
 export default {
   name: 'Course',
+  components: {AddStudent, DeleteStudent},
   props: {
     id: {
       type: String,
       default: '',
       required: true
     },
-    test: {
-      type: Array,
-      required: true
-    },
     index: {
       type: Number,
+      required: true
+    },
+    name: {
+      type: String,
+      default: '',
       required: true
     }
   },
   data() {
     return {
-      courseById: null,
-      executed: false
+      courseStudents: [],
+      updateAddStudents: true
     }
   },
   methods: {
-    triggerMyQuery() {
-      this.$apollo.queries.courseById.skip = false
-      this.$apollo.queries.courseById.refetch()
+    reload(){
+      this.$apollo.queries.courseStudents.refetch()
+    },
+    stundentDeleted(){
+      this.$apollo.queries.courseStudents.refetch()
+      this.updateAddStudents = !this.updateAddStudents
     }
   },
-  watch: {
-    test: {
-      deep: true,
-      handler: function(newVal, oldVal) {
-        if (newVal[this.index] && !this.executed) {
-          this.executed = true
-          this.triggerMyQuery()
-        }
-      }
-    }
-  },
+
   apollo: {
-    courseById: {
-      query: gql`query CourseById($id: String!){
-        courseById(id: $id){
-          id_students
+    courseStudents: {
+      query: gql`query courseStudents($id: String!){
+        courseStudents(id: $id){
+          id
+          nombre
+          apellido
         }
       }`,
       variables () {
@@ -59,32 +64,16 @@ export default {
           id: this.id,
         }
       },
-      skip: true
+      skip: false
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
 
-.parentDiv{
-    margin-top: 30px;
-    margin-left: 30px;
-    margin-right: 30px;
-}
-
-.card{
-  border: 2px solid rgb(235, 235, 235);
-  padding: 20px;
-  border-radius: 10px;
-}
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+  }
 </style>
