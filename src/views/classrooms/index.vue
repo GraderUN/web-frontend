@@ -3,7 +3,7 @@
     <div style="font-size:25px; font-weight:bold; margin-bottom:20px; margin-top:10px; margin-left:10px;">Salones disponibles</div>
     <el-table
       v-loading="listLoading"
-      :data="mockClassrooms"
+      :data="allClassrooms"
       element-loading-text="Loading"
       fit
       highlight-current-row
@@ -74,7 +74,6 @@ export default {
       query: gql`
         query{
           allClassrooms{
-            id
             capacidad
             description
           }
