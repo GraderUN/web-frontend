@@ -1,13 +1,14 @@
 <template>
   <div class="dashboard-container">
+    <el-button @click="assignements">Pulsar</el-button>
     <el-table
-      :data="tableData"
+      :data="assignementsbyStudent"
       style="width: 100%"
     >
-      <el-table-column align="center" label="ID Materia" width="100" prop="id" />
-      <el-table-column label="Nombre Materia" width="400" align="center" prop="name" />
-      <el-table-column label="Profesor" width="400" align="center" prop="teacher" />
-      <el-table-column align="center" label="Horario" prop="schedule" />
+      <el-table-column prop="id" align="center" label="ID Materia" width="100" />
+      <el-table-column prop="materia" label="Nombre Materia" width="400" align="center" />
+      <el-table-column prop="profesor" label="Profesor" width="400" align="center" />
+      <el-table-column prop="horario" align="center" label="Horario" />
       <el-table-column label="Ver materia" width="110" align="center">
         <el-button type="text" size="small" @click="handleClick">Ver materia</el-button>
       </el-table-column>
@@ -18,53 +19,39 @@
 <script>
 import gql from 'graphql-tag'
 
-const GET_SUBJECT = gql`
-  query{
-  studentSubject{
-    id
-    name
-    teacher
-    schedule
-    }
-}
-`
-
 export default {
   name: 'Graph',
   data() {
     return {
+      id: '11',
       allCourses: [],
-      tableData: [{
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
-      }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
-      }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
-      }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
-      }]
-    }
-  },
-  apollo: {
-    allCourses: {
-      query: GET_SUBJECT
+      assignementsbyStudent: []
     }
   },
   methods: {
     handleClick() {
       console.log('click')
+    },
+    assignements() {
+      console.log(this.assignementsbyStudent)
+    }
+  },
+  apollo: {
+    assignementsbyStudent: {
+      query: gql`query assignementsbyStudent($id: String!){
+        assignementsbyStudent(id: $id){
+          materia
+          salon
+          profesor
+          horario
+        }
+      }`,
+      variables() {
+        return {
+          id: this.id
+        }
+      },
+      skip: false
     }
   }
 
