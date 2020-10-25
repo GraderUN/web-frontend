@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button size="medium" type="danger" @click="warningMessage">Borrar Curso</el-button>
+    <el-button size="medium" type="danger" @click="warningMessage">Borrar Salón</el-button>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
     },
 
     async deleteClassroom() {
-      console.log(this.row.id)
+      console.log(this.row)
       /*await this.$apollo.mutate({ 
         mutation: gql`
           mutation ($id: String!) {

@@ -36,8 +36,8 @@ export default {
       })
     },
 
-    async deleteCourse() {
-      await this.$apollo.mutate({ 
+    deleteCourse() {
+      this.$apollo.mutate({ 
         mutation: gql`
           mutation ($id: String!) {
             deleteCourse(id: $id){

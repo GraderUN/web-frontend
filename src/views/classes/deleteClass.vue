@@ -36,22 +36,25 @@ export default {
       })
     },
 
-    async deleteClass() {
-      console.log(this.row.id)
-      /*await this.$apollo.mutate({ 
+    deleteClass() {
+      //console.log(this.row.id)
+
+      //deleteAssignement(id: String!): String!
+      this.$apollo.mutate({
         mutation: gql`
           mutation ($id: String!) {
-            deleteCourse(id: $id){
-              id_students
-              grade
-              letter
+            deleteAssignement(id: $id){
             }
         }`, 
         variables: {
-          id:this.id
+          id:this.row.id
         }
-      })*/
-      new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
+      }).then((data) => {
+        this.$emit('deleted')
+      }).catch((error) => {
+        console.error(error)
+      })
+      //new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
     }
   }
 }

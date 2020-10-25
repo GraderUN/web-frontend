@@ -74,6 +74,7 @@ export default {
       query: gql`
         query{
           allClassrooms{
+            id
             capacidad
             description
           }

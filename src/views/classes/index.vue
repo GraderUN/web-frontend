@@ -3,7 +3,7 @@
     <div style="font-size:25px; font-weight:bold; margin-bottom:20px; margin-top:10px; margin-left:10px;">Clases</div>
     <el-table
       v-loading="listLoading"
-      :data="mockClasses"
+      :data="allAssignements"
       element-loading-text="Loading"
       fit
       highlight-current-row
