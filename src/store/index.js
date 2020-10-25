@@ -13,7 +13,15 @@ const store = new Vuex.Store({
     settings,
     user
   },
-  getters
+  getters,
+  state: {
+    idMateria: 0
+  },
+  mutations: {
+    change(state, newState) {
+      state.idMateria = newState
+    }
+  }
 })
 
 export default store

@@ -2,15 +2,18 @@
   <div class="dashboard-container">
     <el-button @click="assignements">Pulsar</el-button>
     <el-table
-      :data="assignementsbyStudent"
+      ref="scheduleTable"
+      :data="tableData"
       style="width: 100%"
     >
-      <el-table-column prop="id" align="center" label="ID Materia" width="100" />
+      <el-table-column type="index" prop="id" align="center" label="ID Materia" width="100" />
       <el-table-column prop="materia" label="Nombre Materia" width="400" align="center" />
       <el-table-column prop="profesor" label="Profesor" width="400" align="center" />
       <el-table-column prop="horario" align="center" label="Horario" />
       <el-table-column label="Ver materia" width="110" align="center">
-        <el-button type="text" size="small" @click="handleClick">Ver materia</el-button>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="handleClick(tableData[scope.$index])">props</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -18,19 +21,45 @@
 
 <script>
 import gql from 'graphql-tag'
+import EventBus from '../../../event-bus'
 
 export default {
-  name: 'Graph',
+  name: 'Schedule',
   data() {
     return {
-      id: '11',
       allCourses: [],
-      assignementsbyStudent: []
+      subjectId: 0,
+      assignementsbyStudent: [],
+      tableData: [{
+        id: '50',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
+      }, {
+        id: '51',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
+      }, {
+        id: '52',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
+      }, {
+        id: '53',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
+      }]
     }
   },
   methods: {
-    handleClick() {
-      console.log('click')
+    handleClick(table) {
+      this.subjectId = table.id
+      console.log(this.subjectId)
+      EventBus.$emit('idMateriaEstudiante', this.subjectId)
+      this.$store.commit('change', this.subjectId)
+      this.$router.push('/schedule/student')
     },
     assignements() {
       console.log(this.assignementsbyStudent)

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <el-button @click="handleClick">Pulsar</el-button>
+    <h1>{{ $store.state.idMateria }}</h1>
     <el-table
       :data="getSubjects"
       style="width: 100%"
@@ -22,17 +22,33 @@
 
 <script>
 import gql from 'graphql-tag'
+import EventBus from '../../../event-bus'
 
 export default {
-  name: 'Graph',
+  name: 'StudentGrades',
   data() {
     return {
       form: {
         estudianteId: 1074187999,
         claseId: 1
       },
-      getsubjects: []
+      getsubjects: [],
+      materiaId: 0
     }
+  },
+  mounted() {
+    console.log('id mounted:')
+    EventBus.$on('idMateriaEstudiante', data => {
+      console.log('entra')
+      this.materiaId = data
+    })
+  },
+  created() {
+    console.log('id:')
+    EventBus.$on('idMateriaEstudiante', data => {
+      console.log('entra')
+      this.materiaId = data
+    })
   },
   methods: {
     handleClick() {
