@@ -20,10 +20,6 @@ import { createProvider } from './vue-apollo'
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VueApollo from 'vue-apollo'
 
@@ -42,8 +38,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // set ElementUI lang to EN
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
 Vue.use(ElementUI, { locale })
 
 // 如果想要中文版 element-ui，按如下方式声明
