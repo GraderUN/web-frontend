@@ -41,7 +41,7 @@
     </el-table>
 
     <el-dialog :visible.sync="showDialog">
-      <span slot="title">Editing subject (id: {{ form.id }})</span>
+      <span slot="title">Editing subject (id: {{ id }})</span>
       <el-form :model="form">
         <el-form-item label="Subject name">
           <el-input v-model="form.name" />
@@ -104,12 +104,65 @@ export default {
     },
     handleEdit(r) {
       this.showDialog = true
-      this.form.id = r.id
+      this.id = r.id
       this.form.name = r.name
       this.form.grade = r.grade
     },
-    handleDelete() { },
-    handleUpdate() { }
+    handleDelete() {
+      this.deleteSubject().then(() => {
+        this.showDialog = false
+        this.$message({
+          message: `Subject successfully deleted (id: ${this.id})`,
+          type: 'success'
+        })
+        this.updateList()
+      }).catch(() => {
+        this.$message.error('Error deleting subject')
+      })
+    },
+    handleUpdate() {
+      this.updateSubject().then(() => {
+        this.showDialog = false
+        this.$message({
+          message: `Subject successfully updated (id: ${this.id})`,
+          type: 'success'
+        })
+        this.updateList()
+      }).catch(() => {
+        this.$message.error('Error updating subject')
+      })
+    },
+    async deleteSubject() {
+      await this.$apollo.mutate({
+        mutation: gql`
+          mutation($id: Int!){
+            deleteSubject(id: $id){
+              rows
+              response
+            }
+          }
+        `,
+        variables: {
+          id: this.id
+        }
+      })
+    },
+    async updateSubject() {
+      await this.$apollo.mutate({
+        mutation: gql`
+          mutation($id: Int!, $data: SubjectInput!){
+            putSubject(id: $id, data: $data){
+              rows
+              response
+            }
+          }
+        `,
+        variables: {
+          data: this.form,
+          id: this.id
+        }
+      })
+    }
   }
 }
 </script>
