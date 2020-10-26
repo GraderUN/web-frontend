@@ -37,9 +37,16 @@ export default {
   // apollo: {},
   methods: {
     onSubmit() {
-      console.log(this.form.name, this.form.grade)
-      this.createSubject()
+      //console.log(this.form.name, this.form.grade)
       this.$message('submit!')
+      this.createSubject().then(() => {
+        this.$message({
+          message: 'Subject saved',
+          type: 'success'
+        });
+      }).catch(() => {
+        this.$message.error('Error submitting Subject');
+      });
     },
     onCancel() {
       this.$message({
