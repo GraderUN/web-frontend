@@ -1,15 +1,18 @@
 <template>
   <div class="dashboard-container">
     <el-table
-      :data="tableData"
+      ref="scheduleTable"
+      :data="AssignementsByProfessor"
       style="width: 100%"
     >
-      <el-table-column align="center" label="ID Materia" width="100" prop="id" />
-      <el-table-column label="Nombre Materia" width="400" align="center" prop="name" />
-      <el-table-column label="Profesor" width="400" align="center" prop="teacher" />
-      <el-table-column align="center" label="Horario" prop="schedule" />
+      <el-table-column prop="curso" align="center" label="Id curso" width="100" />
+      <el-table-column prop="materia" label="Nombre Materia" width="400" align="center" />
+      <el-table-column prop="salon" label="Profesor" width="400" align="center" />
+      <el-table-column prop="horario" align="center" label="Horario" />
       <el-table-column label="Ver materia" width="110" align="center">
-        <el-button type="text" size="small" @click="handleClick">Ver Estudiantes</el-button>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="handleClick(AssignementsByProfessor[scope.$index])">props</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -18,53 +21,60 @@
 <script>
 import gql from 'graphql-tag'
 
-const GET_SUBJECT = gql`
-  query{
-  studentSubject{
-    id
-    name
-    teacher
-    schedule
-    }
-}
-`
-
 export default {
-  name: 'Graph',
+  name: 'Schedule',
   data() {
     return {
+      professor: '15',
       allCourses: [],
+      subjectId: 0,
+      AssignementsByProfessor: [],
       tableData: [{
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '50',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '51',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '52',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '53',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }]
     }
   },
   apollo: {
-    allCourses: {
-      query: GET_SUBJECT
+    AssignementsByProfessor: {
+      query: gql`query AssignementsByProfessor($professor: String!){
+        AssignementsByProfessor(professor: $professor){
+          curso,
+          materia,
+          salon,
+          horario
+        }
+      }`,
+      variables() {
+        return {
+          professor: this.professor
+        }
+      },
+      skip: false
     }
   },
   methods: {
-    handleClick() {
-      console.log('click')
+    handleClick(table) {
+      this.subjectId = table.id
+      this.$store.commit('change', this.subjectId)
+      this.$router.push('/schedule/EditStudentGrades')
     }
   }
 

@@ -1,72 +1,67 @@
 <template>
   <div class="dashboard-container">
-    <el-table
-      :data="tableData"
-      style="width: 100%"
-    >
-      <el-table-column align="center" label="ID Estudiante" width="100" prop="id" />
-      <el-table-column label="Nombre Estudiante" align="center" prop="name" />
-      <el-table-column label="Ver materia" align="center">
-        <el-button type="text" size="small" @click="handleClick">Editar notas</el-button>
-      </el-table-column>
-    </el-table>
-    <div>
-      <h1>Contenido de la materia</h1>
-      <h3>{{ contenido }}</h3>
-    </div>
+    <el-button @click="click">sfdfsa</el-button>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 
-const GET_SUBJECT = gql`
-  query{
-  studentSubject{
-    id
-    name
-    teacher
-    schedule
-    }
-}
-`
-
 export default {
-  name: 'Graph',
+  name: 'Schedule',
   data() {
     return {
+      id: '5f8e5d11090c20a6b6feef3d',
       allCourses: [],
+      subjectId: 0,
+      courseById: [],
       tableData: [{
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '50',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '51',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '52',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }, {
-        id: '132456',
-        name: 'Matematicas',
-        teacher: 'Carlos',
-        schedule: 'Lunes y miercoles de 6pm a 9pm'
+        id: '53',
+        materia: 'Matematicas',
+        profesor: 'Carlos',
+        horario: 'Lunes y miercoles de 6pm a 9pm'
       }]
     }
   },
   apollo: {
-    allCourses: {
-      query: GET_SUBJECT
+    courseById: {
+      query: gql`query courseById($id: String!){
+        courseById(id: $id){
+          id_students
+        }
+      }`,
+      variables() {
+        return {
+          id: this.id
+        }
+      },
+      skip: false
     }
   },
   methods: {
-    handleClick() {
-      console.log('click')
+    click() {
+      console.log(JSON.parse(JSON.stringify(this.courseById.id_students)))
+      this.$router.push('/schedule/EditStudentGrades')
+    },
+    handleClick(table) {
+      this.subjectId = table.id
+      this.$store.commit('change', this.subjectId)
+      this.$router.push('/schedule/teacher')
     }
   }
 

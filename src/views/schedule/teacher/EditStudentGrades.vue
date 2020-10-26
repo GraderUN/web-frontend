@@ -1,88 +1,116 @@
 <template>
   <div class="dashboard-container">
+    <h2>Id curso: {{ $store.state.idMateria }}</h2>
     <el-table
-      :data="tableNotas"
+      :data="getsubjects"
       style="width: 100%"
     >
-      <el-table-column label="ID Nota" width="100" align="center" prop="idNota" />
-      <el-table-column label="ID estudiante" width="200" align="center" prop="idEstudiante" />
-      <el-table-column label="Tipo Nota" width="400" align="center" prop="tipoNota" />
-      <el-table-column label="Valor" width="80" align="center" prop="valor" />
-      <el-table-column label="Porcentaje" width="100" align="center" prop="porcentaje" />
-      <el-table-column label="Periodo" width="100" align="center" prop="periodo" />
-      <el-table-column label="Comentarios" align="center" prop="comentarios" />
-      <el-table-column label="Ver materia" align="center">
-        <el-button type="text" size="small" @click="handleClick">Editar nota</el-button>
+      <el-table-column label="ID Nota" prop="notasId" width="100" align="center" />
+      <el-table-column label="ID estudiante" prop="notasIdEstudiante" width="200" align="center" />
+      <el-table-column label="Tipo Nota" prop="tipoNotasNombre" width="400" align="center" />
+      <el-table-column label="Valor" prop="notasValor" width="80" align="center" />
+      <el-table-column label="Porcentaje" prop="notasPorcentaje" width="100" align="center" />
+      <el-table-column label="Periodo" prop="notasPeriodo" width="100" align="center" />
+      <el-table-column label="Operaciones">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">
+            Editar
+          </el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
+            Eliminar
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
+    <div>
+      <el-button type="success">+Agregar Notas</el-button>
+    </div>
+    <div>
+      <h1>Contenido de la materia</h1>
+      <h3>{{ contenido }}</h3>
+    </div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 
-const GET_SUBJECT = gql`
-  query{
-  studentSubject{
-    id
-    name
-    teacher
-    schedule
-    }
-}
-`
-
 export default {
-  name: 'Graph',
+  name: 'StudentGrades',
   data() {
     return {
-      allCourses: [],
-      tableNotas: [{
-        idNota: '132456',
-        idEstudiante: '132456',
-        tipoNota: 'Parcial I',
-        valor: '50',
-        porcentaje: '35%',
-        periodo: '1',
-        comentarios: 'Periodo 1'
-      }, {
-        idNota: '132457',
-        idEstudiante: '132456',
-        tipoNota: 'Parcial II',
-        valor: '50',
-        porcentaje: '35%',
-        periodo: '2',
-        comentarios: 'Periodo 1'
-      }, {
-        idNota: '132458',
-        idEstudiante: '132456',
-        tipoNota: 'Parcial III',
-        valor: '50',
-        porcentaje: '35%',
-        periodo: '3',
-        comentarios: 'Periodo 1'
-      }, {
-        idNota: '132459',
-        idEstudiante: '132456',
-        tipoNota: 'Parcial IV',
-        valor: '50',
-        porcentaje: '35%',
-        periodo: '4',
-        comentarios: 'Periodo 1'
-      }],
-      contenido: 'Contenido de la materiaaaaaaaa'
+      form: {
+        estudianteId: 1074187999,
+        claseId: 1
+      },
+      getsubjects: [],
+      materiaId: 0,
+      contenido: 'Aqui va el contenido de la materia'
     }
   },
-  apollo: {
-    allCourses: {
-      query: GET_SUBJECT
-    }
+  mounted() {
+    this.showNotas()
   },
   methods: {
     handleClick() {
-      console.log('click')
+      this.showNotas()
+    },
+    handleEdit(index, row) {
+      console.log(index, row)
+    },
+    handleDelete(index, row) {
+      console.log(index, row)
+    },
+    async showNotas() {
+      await this.$apollo.query({
+        query: gql`
+        query ($datosEstudianteClase: datosEstudianteClase!) {
+            NotasEstudianteClase(datosEstudianteClase: $datosEstudianteClase){
+                notasId
+                notasIdEstudiante
+                notastipoNotasId
+                notasValor
+                notasPorcentaje
+                notasPeriodo
+                notasComentarios
+                tipoNotasId
+                tipoNotasNombre
+                tipoNotasIdClase
+            }
+        }`,
+        variables: {
+          datosEstudianteClase: this.form
+        }
+      }).then(resolve => {
+        this.getsubjects = resolve
+        this.getsubjects = this.getsubjects.data.NotasEstudianteClase
+      }).catch((error) => {
+        console.error(error)
+      })
     }
   }
+  /*  apollo: {
+    getSubjects: {
+      query: gql`
+      query($datosEstudianteClase: datosEstudianteClase!){
+        NotasEstudianteClase( datosEstudianteClase: $datosEstudianteClase){
+          notasId,
+          notasIdEstudiante,
+          notastipoNotasId,
+          notasValor,
+          notasPorcentaje,
+          notasPeriodo,
+          notasComentarios,
+          tipoNotasId,
+          tipoNotasNombre,
+          tipoNotasIdClase
+        }
+      }`
+    },
+    variables: {
+      datosEstudianteClase: this.form
+    }
+  }*/
 
 }
 </script>
