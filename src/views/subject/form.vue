@@ -37,9 +37,16 @@ export default {
   // apollo: {},
   methods: {
     onSubmit() {
-      console.log(this.form.name, this.form.grade)
-      this.createSubject()
+      // console.log(this.form.name, this.form.grade)
       this.$message('submit!')
+      this.createSubject().then(() => {
+        this.$message({
+          message: 'Subject saved',
+          type: 'success'
+        })
+      }).catch(() => {
+        this.$message.error('Error submitting Subject')
+      })
     },
     onCancel() {
       this.$message({
@@ -48,7 +55,7 @@ export default {
       })
     },
     async createSubject() {
-      const result = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql`
           mutation($data: SubjectInput!){
             postSubject(data: $data){
@@ -61,7 +68,6 @@ export default {
           data: this.form
         }
       })
-
     }
   }
 }
