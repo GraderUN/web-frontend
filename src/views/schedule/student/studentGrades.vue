@@ -1,13 +1,13 @@
 <template>
   <div class="dashboard-container">
-    <h1>{{ $store.state.idMateria }}</h1>
+    <h2>Id curso: {{ $store.state.idMateria }}</h2>
     <el-table
-      :data="getSubjects"
+      :data="getsubjects"
       style="width: 100%"
     >
       <el-table-column label="ID Nota" prop="notasId" width="100" align="center" />
       <el-table-column label="ID estudiante" prop="notasIdEstudiante" width="200" align="center" />
-      <el-table-column label="Tipo Nota" prop="notastipoNotasId" width="400" align="center" />
+      <el-table-column label="Tipo Nota" prop="tipoNotasNombre" width="400" align="center" />
       <el-table-column label="Valor" prop="notasValor" width="80" align="center" />
       <el-table-column label="Porcentaje" prop="notasPorcentaje" width="100" align="center" />
       <el-table-column label="Periodo" prop="notasPeriodo" width="100" align="center" />
@@ -22,7 +22,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import EventBus from '../../../event-bus'
 
 export default {
   name: 'StudentGrades',
@@ -33,29 +32,19 @@ export default {
         claseId: 1
       },
       getsubjects: [],
-      materiaId: 0
+      materiaId: 0,
+      contenido: 'Aqui va el contenido de la materia'
     }
   },
   mounted() {
-    console.log('id mounted:')
-    EventBus.$on('idMateriaEstudiante', data => {
-      console.log('entra')
-      this.materiaId = data
-    })
-  },
-  created() {
-    console.log('id:')
-    EventBus.$on('idMateriaEstudiante', data => {
-      console.log('entra')
-      this.materiaId = data
-    })
+    this.showNotas()
   },
   methods: {
     handleClick() {
       this.showNotas()
     },
-    showNotas() {
-      this.$apollo.query({
+    async showNotas() {
+      await this.$apollo.query({
         query: gql`
         query ($datosEstudianteClase: datosEstudianteClase!) {
             NotasEstudianteClase(datosEstudianteClase: $datosEstudianteClase){
@@ -76,6 +65,9 @@ export default {
         }
       }).then(resolve => {
         this.getsubjects = resolve
+        this.getsubjects = this.getsubjects.data.NotasEstudianteClase
+      }).catch((error) => {
+        console.error(error)
       })
     }
   }

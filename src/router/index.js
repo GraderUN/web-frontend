@@ -105,7 +105,6 @@ export const constantRoutes = [
       meta: { title: 'Cursos', icon: 'table' }
     }]
   },
-  
   {
     path: '/salones',
     component: Layout,
