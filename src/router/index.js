@@ -105,7 +105,7 @@ export const constantRoutes = [
       meta: { title: 'Cursos', icon: 'table' }
     }]
   },
-  
+
   {
     path: '/salones',
     component: Layout,
@@ -161,6 +161,23 @@ export const constantRoutes = [
         name: 'Teacher List',
         component: () => import('@/views/subject/teacherlist'),
         meta: { title: 'Teacher List', icon: 'user' }
+      }
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    name: 'User',
+    meta: {
+      title: 'User',
+      icon: 'nested'
+    },
+    children: [
+      {
+        path: 'details',
+        name: 'User Details',
+        component: () => import('@/views/user/details'),
+        meta: { title: 'User Details', icon: 'user' }
       }
     ]
   },
