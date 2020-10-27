@@ -149,6 +149,18 @@ export const constantRoutes = [
         name: 'List',
         component: () => import('@/views/subject/list'),
         meta: { title: 'Subject List', icon: 'table' }
+      },
+      {
+        path: 'teacherform',
+        name: 'Teacher Form',
+        component: () => import('@/views/subject/teacherform'),
+        meta: { title: 'Teacher Form', icon: 'form' }
+      },
+      {
+        path: 'teacherlist',
+        name: 'Teacher List',
+        component: () => import('@/views/subject/teacherlist'),
+        meta: { title: 'Teacher List', icon: 'user' }
       }
     ]
   },
