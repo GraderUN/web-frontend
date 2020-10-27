@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     reload(){
-      this.$apollo.queries.allAssignements.refetch()
+      this.$apollo.queries.allAssignementsInfo.refetch()
     }
   }
 
