@@ -27,6 +27,9 @@
           <el-input v-model="search" size="mini" placeholder="Type to search" />
         </template>
         <template slot-scope="scope">
+          <el-button size="mini" plain @click="handleContent(scope.row)">
+            View Content
+          </el-button>
           <el-button
             size="mini"
             type="warning"
@@ -39,6 +42,7 @@
       </el-table-column>
     </el-table>
 
+    <!-- EDIT DIALOG -->
     <el-dialog :visible.sync="showDialog">
       <span slot="title">Editing subject (id: {{ id }})</span>
       <el-form :model="form">
@@ -60,6 +64,24 @@
         <el-button type="warning" @click="handleUpdate">Update</el-button>
       </span>
     </el-dialog>
+
+    <!-- CONTENT DIALOG -->
+    <el-dialog :visible.sync="showContent">
+      <span slot="title">Content (id: {{ id }}): {{ form.name }}</span>
+      <el-input
+        v-model="textarea"
+        type="textarea"
+        autosize
+        placeholder="Subject Content"
+        maxlength="10000"
+        show-word-limit
+      />
+      <span slot="footer" class="dialog-footer">
+        <el-button type="warning" @click="contentUpdate">
+          Update Content
+        </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -71,6 +93,8 @@ export default {
     return {
       search: '',
       showDialog: false,
+      showContent: false,
+      textarea: '',
       id: 0,
       form: {
         name: '',
@@ -85,6 +109,14 @@ export default {
           id
           name
           grade
+        }
+      }
+    `,
+    getContent: gql`
+      query($id: Int!){
+        getContent(id: $id){
+          name
+          content
         }
       }
     `
@@ -106,6 +138,19 @@ export default {
       this.id = r.id
       this.form.name = r.name
       this.form.grade = r.grade
+    },
+    handleContent(r) {
+      this.id = r.id
+      this.form.name = r.name
+      this.$apollo.queries.getContent.refetch({
+        id: this.id
+      }).then(() => {
+        this.textarea = this.getContent.content
+        this.showContent = true
+      }
+      ).catch(() => {
+        this.$message.error('Error fetching Content')
+      })
     },
     handleDelete() {
       this.deleteSubject().then(() => {
@@ -129,6 +174,17 @@ export default {
         this.updateList()
       }).catch(() => {
         this.$message.error('Error updating subject')
+      })
+    },
+    contentUpdate() {
+      this.updateContent().then(() => {
+        this.showContent = false
+        this.$message({
+          message: `Content successfully updated (id: ${this.id})`,
+          type: 'success'
+        })
+      }).catch(() => {
+        this.$message.error('Error updating content')
       })
     },
     async deleteSubject() {
@@ -159,6 +215,22 @@ export default {
         variables: {
           data: this.form,
           id: this.id
+        }
+      })
+    },
+    async updateContent() {
+      await this.$apollo.mutate({
+        mutation: gql`
+          mutation($id: Int!, $content: String!){
+            putContent(id: $id, content: $content){
+              rows
+              response
+            }
+          }
+        `,
+        variables: {
+          id: this.id,
+          content: this.textarea
         }
       })
     }
