@@ -3,7 +3,7 @@
     <div style="font-size:25px; font-weight:bold; margin-bottom:20px; margin-top:10px; margin-left:10px;">Clases</div>
     <el-table
       v-loading="listLoading"
-      :data="mockClasses"
+      :data="allAssignementsInfo"
       element-loading-text="Loading"
       fit
       highlight-current-row
@@ -63,20 +63,12 @@ import gql from 'graphql-tag'
 import AddClass from './addClass'
 import DeleteClass from './deleteClass'
 
-/*
-Haer operación en el backend que cuando se le solicite
-la información de las clases que existen, envie la información
-del curso, la materia, el profesor, el salon, y el horario
-(Para los primeros 4, la información que trae la petición
-son los id de cada uno)
-*/
-
 export default {
   name: 'Classrooms',
   components: { AddClass, DeleteClass },
   data() {
     return {
-      allAssignements: [],
+      allAssignementsInfo: [],
       mockClasses: [
         {
           id:"1",
@@ -107,10 +99,10 @@ export default {
     }
   },
   apollo: {
-    allAssignements: {
+    allAssignementsInfo: {
       query: gql`
         query{
-          allAssignements{
+          allAssignementsInfo{
             id
             curso
             salon
@@ -123,7 +115,7 @@ export default {
   },
   methods: {
     reload(){
-      this.$apollo.queries.allAssignements.refetch()
+      this.$apollo.queries.allAssignementsInfo.refetch()
     }
   }
 

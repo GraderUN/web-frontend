@@ -4,7 +4,7 @@
     <el-form ref="form" :model="form" label-width="200px">
       <el-form-item label="Curso">
         <el-select v-model="form.curso" placeholder="Seleccione el curso" style="width: 600px">
-          <el-option v-for="(course,index) in allCourses" :key="index" :label="course.grade+' '+course.letter" :value="course.id"></el-option>
+          <el-option v-for="(course,index) in allCourses" :key="index" :label="course.grade+course.letter" :value="course.id"></el-option>
         </el-select>
       </el-form-item>
 
@@ -59,8 +59,9 @@ export default {
   },
   methods: {
     onSubmit() {
-      //ASEGURARSE QUE EL FORMATO TIENE LOS TIPOS DE DATOS ADECUADOS
-      console.log(this.form)
+      this.form.profesor = this.form.profesor.toString()
+      this.form.materia = this.form.materia.toString()
+      
       this.$apollo.mutate({
         mutation: gql`
           mutation ($assignement: AssignementInput!) {
@@ -75,15 +76,14 @@ export default {
         this.$apollo.queries.getSubjects.refetch()
         this.$apollo.queries.allProfesores.refetch()
         this.$apollo.queries.allClassrooms.refetch()
+        this.form.curso = null
+        this.form.salon = null
+        this.form.horario = null
+        this.form.profesor = null
+        this.form.materia = null
       }).catch((error) => {
         console.error(error)
       })
-
-      this.form.curso = null
-      this.form.salon = null
-      this.form.horario = null
-      this.form.profesor = null
-      this.form.materia = null
     }
   },
   apollo: {

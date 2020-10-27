@@ -33,9 +33,8 @@ export default {
     }
   },
   methods: {
-    async onSubmit() { 
-      this.form.letter = this.form.letter.toUpperCase()
-      const result = await this.$apollo.mutate({
+    onSubmit() {
+      this.$apollo.mutate({
         mutation: gql`
           mutation ($classroom: ClassroomInput!) {
             createClassroom(classroom: $classroom)
@@ -43,11 +42,13 @@ export default {
         variables: {
             classroom: this.form
         }
+      }).then((data) => {
+        this.form.capacidad = 0
+        this.form.description = ''
+        this.$parent.reload()
+      }).catch((error) => {
+        console.error(error)
       })
-
-      this.form.capacidad = 0
-      this.form.description = ''
-      this.$parent.reload()
     }
   }
 }

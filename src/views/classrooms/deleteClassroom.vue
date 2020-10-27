@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button size="medium" type="danger" @click="warningMessage">Borrar Curso</el-button>
+    <el-button size="medium" type="danger" @click="warningMessage">Borrar Salón</el-button>
   </div>
 </template>
 
@@ -29,29 +29,27 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deleteClassroom()
-        this.$message({
-          type: 'success',
-          message: 'Eliminación existosa'
-        });
       })
     },
 
-    async deleteClassroom() {
-      console.log(this.row.id)
-      /*await this.$apollo.mutate({ 
+    deleteClassroom() {
+      this.$apollo.mutate({ 
         mutation: gql`
           mutation ($id: String!) {
-            deleteCourse(id: $id){
-              id_students
-              grade
-              letter
-            }
+            deleteClassroom(id: $id)
         }`, 
         variables: {
-          id:this.id
+          id:this.row.id
         }
-      })*/
-      new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
+      }).then((data) => {
+        this.$emit('deleted')
+        this.$message({
+          type: 'success',
+          message: 'Eliminación existosa'
+        })
+      }).catch((error) => {
+        console.error(error)
+      })
     }
   }
 }
