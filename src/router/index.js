@@ -186,13 +186,13 @@ export const constantRoutes = [
         path: 'teacherform',
         name: 'Teacher Form',
         component: () => import('@/views/subject/teacherform'),
-        meta: { title: 'Subject Teacher', icon: 'form' }
+        meta: { title: 'Teacher Form', icon: 'form' }
       },
       {
         path: 'teacherlist',
         name: 'Teacher List',
         component: () => import('@/views/subject/teacherlist'),
-        meta: { title: 'Subject Teacher', icon: 'user' }
+        meta: { title: 'Teacher List', icon: 'user' }
       }
     ]
   },
