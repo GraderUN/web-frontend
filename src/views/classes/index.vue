@@ -3,7 +3,7 @@
     <div style="font-size:25px; font-weight:bold; margin-bottom:20px; margin-top:10px; margin-left:10px;">Clases</div>
     <el-table
       v-loading="listLoading"
-      :data="allAssignements"
+      :data="allAssignementsInfo"
       element-loading-text="Loading"
       fit
       highlight-current-row
@@ -68,7 +68,7 @@ export default {
   components: { AddClass, DeleteClass },
   data() {
     return {
-      allAssignements: [],
+      allAssignementsInfo: [],
       mockClasses: [
         {
           id:"1",
@@ -99,7 +99,7 @@ export default {
     }
   },
   apollo: {
-    allAssignements: {
+    allAssignementsInfo: {
       query: gql`
         query{
           allAssignementsInfo{
