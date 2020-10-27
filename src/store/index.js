@@ -15,11 +15,19 @@ const store = new Vuex.Store({
   },
   getters,
   state: {
-    idMateria: 0
+    idMateria: 0,
+    idCurso: '',
+    idClase: ''
   },
   mutations: {
     change(state, newState) {
       state.idMateria = newState
+    },
+    changeIdCurso(state, newState) {
+      state.idCurso = newState
+    },
+    changeIdClase(state, newState) {
+      state.idClase = newState
     }
   }
 })

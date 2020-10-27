@@ -5,7 +5,8 @@
       :data="assignementsbyStudent"
       style="width: 100%"
     >
-      <el-table-column prop="id" align="center" label="Id curso" width="100" />
+      <el-table-column prop="id" align="center" label="Id clase" width="100" />
+      <el-table-column prop="curso" align="center" label="Id curso" width="100" />
       <el-table-column prop="materia" label="Nombre Materia" width="400" align="center" />
       <el-table-column prop="profesor" label="Profesor" width="400" align="center" />
       <el-table-column prop="horario" align="center" label="Horario" />
@@ -27,29 +28,10 @@ export default {
     return {
       id: '11',
       allCourses: [],
+      claseId: '',
+      cursoId: '',
       subjectId: 0,
-      assignementsbyStudent: [],
-      tableData: [{
-        id: '50',
-        materia: 'Matematicas',
-        profesor: 'Carlos',
-        horario: 'Lunes y miercoles de 6pm a 9pm'
-      }, {
-        id: '51',
-        materia: 'Matematicas',
-        profesor: 'Carlos',
-        horario: 'Lunes y miercoles de 6pm a 9pm'
-      }, {
-        id: '52',
-        materia: 'Matematicas',
-        profesor: 'Carlos',
-        horario: 'Lunes y miercoles de 6pm a 9pm'
-      }, {
-        id: '53',
-        materia: 'Matematicas',
-        profesor: 'Carlos',
-        horario: 'Lunes y miercoles de 6pm a 9pm'
-      }]
+      assignementsbyStudent: []
     }
   },
   apollo: {
@@ -57,6 +39,7 @@ export default {
       query: gql`query assignementsbyStudent($id: String!){
         assignementsbyStudent(id: $id){
           id
+          curso
           materia
           salon
           profesor
@@ -73,8 +56,8 @@ export default {
   },
   methods: {
     handleClick(table) {
-      this.subjectId = table.id
-      this.$store.commit('change', this.subjectId)
+      this.claseId = table.id
+      this.$store.commit('changeIdClase', this.claseId)
       this.$router.push('/schedule/student')
     }
   }

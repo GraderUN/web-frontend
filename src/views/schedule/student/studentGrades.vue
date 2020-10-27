@@ -11,12 +11,8 @@
       <el-table-column label="Valor" prop="notasValor" width="80" align="center" />
       <el-table-column label="Porcentaje" prop="notasPorcentaje" width="100" align="center" />
       <el-table-column label="Periodo" prop="notasPeriodo" width="100" align="center" />
-      <el-table-column label="Comentarios" prop="NotasComentarios" align="center" />
+      <el-table-column label="Comentarios" prop="notasComentarios" align="center" />
     </el-table>
-    <div>
-      <h1>Contenido de la materia</h1>
-      <h3>{{ contenido }}</h3>
-    </div>
   </div>
 </template>
 
@@ -28,8 +24,8 @@ export default {
   data() {
     return {
       form: {
-        estudianteId: 1074187999,
-        claseId: 1
+        estudianteId: 11,
+        claseId: ''
       },
       getsubjects: [],
       materiaId: 0,
@@ -37,9 +33,13 @@ export default {
     }
   },
   mounted() {
+    this.assignClase()
     this.showNotas()
   },
   methods: {
+    assignClase() {
+      this.form.claseId = this.$store.state.idClase
+    },
     handleClick() {
       this.showNotas()
     },
@@ -65,6 +65,7 @@ export default {
         }
       }).then(resolve => {
         this.getsubjects = resolve
+        console.log(this.getsubjects)
         this.getsubjects = this.getsubjects.data.NotasEstudianteClase
       }).catch((error) => {
         console.error(error)
