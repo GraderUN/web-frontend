@@ -69,11 +69,11 @@ export default {
       }).then((data) => {
         this.$parent.reload()
         this.$apollo.queries.studentsWithoutCourse.refetch()
+        this.form.id = null
+        this.form.id_course = null
       }).catch((error) => {
         console.error(error)
       })
-      this.form.id = null
-      this.form.id_course = null
     }
   },
   apollo: {

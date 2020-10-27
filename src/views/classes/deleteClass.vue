@@ -29,32 +29,27 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deleteClass()
-        this.$message({
-          type: 'success',
-          message: 'Eliminación existosa'
-        });
       })
     },
 
     deleteClass() {
-      //console.log(this.row.id)
-
-      //deleteAssignement(id: String!): String!
       this.$apollo.mutate({
         mutation: gql`
           mutation ($id: String!) {
-            deleteAssignement(id: $id){
-            }
+            deleteAssignement(id: $id)
         }`, 
         variables: {
           id:this.row.id
         }
       }).then((data) => {
         this.$emit('deleted')
+        this.$message({
+          type: 'success',
+          message: 'Eliminación existosa'
+        })
       }).catch((error) => {
         console.error(error)
       })
-      //new Promise(() => setTimeout(500)).then(this.$emit('deleted'))
     }
   }
 }

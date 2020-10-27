@@ -61,9 +61,6 @@ export default {
     onSubmit() {
       this.form.profesor = this.form.profesor.toString()
       this.form.materia = this.form.materia.toString()
-      //ASEGURARSE QUE EL FORMATO TIENE LOS TIPOS DE DATOS ADECUADOS
-      console.log(this.form)
-      console.log(this.form.salon)
       
       this.$apollo.mutate({
         mutation: gql`

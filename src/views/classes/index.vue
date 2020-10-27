@@ -63,14 +63,6 @@ import gql from 'graphql-tag'
 import AddClass from './addClass'
 import DeleteClass from './deleteClass'
 
-/*
-Haer operación en el backend que cuando se le solicite
-la información de las clases que existen, envie la información
-del curso, la materia, el profesor, el salon, y el horario
-(Para los primeros 4, la información que trae la petición
-son los id de cada uno)
-*/
-
 export default {
   name: 'Classrooms',
   components: { AddClass, DeleteClass },
@@ -110,7 +102,7 @@ export default {
     allAssignements: {
       query: gql`
         query{
-          allAssignements{
+          allAssignementsInfo{
             id
             curso
             salon
