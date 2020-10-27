@@ -1,16 +1,19 @@
 <template>
   <div class="dashboard-container">
-    <el-button @click="assignements">Pulsar</el-button>
     <el-table
+      ref="scheduleTable"
       :data="assignementsbyStudent"
       style="width: 100%"
     >
-      <el-table-column prop="id" align="center" label="ID Materia" width="100" />
+      <el-table-column prop="id" align="center" label="Id clase" width="100" />
+      <el-table-column prop="curso" align="center" label="Id curso" width="100" />
       <el-table-column prop="materia" label="Nombre Materia" width="400" align="center" />
       <el-table-column prop="profesor" label="Profesor" width="400" align="center" />
       <el-table-column prop="horario" align="center" label="Horario" />
       <el-table-column label="Ver materia" width="110" align="center">
-        <el-button type="text" size="small" @click="handleClick">Ver materia</el-button>
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="handleClick(assignementsbyStudent[scope.$index])">props</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -20,26 +23,23 @@
 import gql from 'graphql-tag'
 
 export default {
-  name: 'Graph',
+  name: 'Schedule',
   data() {
     return {
       id: '11',
       allCourses: [],
+      claseId: '',
+      cursoId: '',
+      subjectId: 0,
       assignementsbyStudent: []
-    }
-  },
-  methods: {
-    handleClick() {
-      console.log('click')
-    },
-    assignements() {
-      console.log(this.assignementsbyStudent)
     }
   },
   apollo: {
     assignementsbyStudent: {
       query: gql`query assignementsbyStudent($id: String!){
         assignementsbyStudent(id: $id){
+          id
+          curso
           materia
           salon
           profesor
@@ -52,6 +52,13 @@ export default {
         }
       },
       skip: false
+    }
+  },
+  methods: {
+    handleClick(table) {
+      this.claseId = table.id
+      this.$store.commit('changeIdClase', this.claseId)
+      this.$router.push('/schedule/student')
     }
   }
 

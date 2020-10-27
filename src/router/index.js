@@ -71,8 +71,7 @@ export const constantRoutes = [
       {
         path: 'student',
         name: 'Student',
-        component: () => import('@/views/schedule/student/studentGrades'),
-        meta: { title: 'Student', icon: 'table' }
+        component: () => import('@/views/schedule/student/studentGrades')
       },
       {
         path: 'scheduleTeacher',
@@ -81,16 +80,9 @@ export const constantRoutes = [
         meta: { title: 'ScheduleTeacher', icon: 'table' }
       },
       {
-        path: 'Teacher',
-        name: 'Teacher',
-        component: () => import('@/views/schedule/teacher/TeacherGrades'),
-        meta: { title: 'Teacher', icon: 'table' }
-      },
-      {
         path: 'EditStudentGrades',
         name: 'EditStudentGrades',
-        component: () => import('@/views/schedule/teacher/EditStudentGrades'),
-        meta: { title: 'EditStudentGrades', icon: 'table' }
+        component: () => import('@/views/schedule/teacher/EditStudentGrades')
       }
     ]
   },
@@ -105,7 +97,6 @@ export const constantRoutes = [
       meta: { title: 'Cursos', icon: 'table' }
     }]
   },
-  
   {
     path: '/salones',
     component: Layout,
