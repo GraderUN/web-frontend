@@ -45,7 +45,7 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:5000/'
+  uri: process.env.VUE_APP_GRAPHQL_HTTP
 })
 
 const apolloClient = new ApolloClient({
