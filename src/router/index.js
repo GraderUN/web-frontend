@@ -56,108 +56,76 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/schedule',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: '/',
+    name: 'Schedule',
+    meta: { title: 'Schedule', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'scheduleStudent',
+        name: 'ScheduleStudent',
+        component: () => import('@/views/schedule/student/schedule'),
+        meta: { title: 'ScheduleStudent', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'student',
+        name: 'Student',
+        component: () => import('@/views/schedule/student/studentGrades'),
+        meta: { title: 'Student', icon: 'table' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'scheduleTeacher',
+        name: 'scheduleTeacher',
+        component: () => import('@/views/schedule/teacher/schedule'),
+        meta: { title: 'ScheduleTeacher', icon: 'table' }
+      },
+      {
+        path: 'Teacher',
+        name: 'Teacher',
+        component: () => import('@/views/schedule/teacher/TeacherGrades'),
+        meta: { title: 'Teacher', icon: 'table' }
+      },
+      {
+        path: 'EditStudentGrades',
+        name: 'EditStudentGrades',
+        component: () => import('@/views/schedule/teacher/EditStudentGrades'),
+        meta: { title: 'EditStudentGrades', icon: 'table' }
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '/cursos',
     component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
+    children: [{
+      path: 'courses',
+      name: 'courses',
+      component: () => import('@/views/courses/index'),
+      meta: { title: 'Cursos', icon: 'table' }
+    }]
+  },
+  
+  {
+    path: '/salones',
+    component: Layout,
+    children: [{
+      path: 'classrooms',
+      name: 'classrooms',
+      component: () => import('@/views/classrooms/index'),
+      meta: { title: 'Salones', icon: 'table' }
+    }]
+  },
+
+  {
+    path: '/clases',
+    component: Layout,
+    children: [{
+      path: 'classes',
+      name: 'classes',
+      component: () => import('@/views/classes/index'),
+      meta: { title: 'Clases', icon: 'table' }
+    }]
   },
 
   // Subject Routes
