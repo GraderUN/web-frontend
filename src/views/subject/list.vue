@@ -10,7 +10,6 @@
       Update
     </el-button>
     <el-table
-      height="500"
       border
       :data="
         getSubjects.filter(
