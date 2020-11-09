@@ -1,6 +1,7 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
+const fs = require('fs');
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -35,6 +36,10 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    https:{
+      key: fs.readFileSync('./certs/vue.key'),
+      cert: fs.readFileSync('./certs/vue.cert')
     },
     before: require('./mock/mock-server.js')
   },
