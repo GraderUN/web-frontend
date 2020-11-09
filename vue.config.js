@@ -39,7 +39,7 @@ module.exports = {
     },
     https:{
       key: fs.readFileSync('./certs/vue.key'),
-      cert: fs.readFileSync('./certs/vue.cert')
+      cert: fs.readFileSync('./certs/vue.crt')
     },
     before: require('./mock/mock-server.js')
   },
