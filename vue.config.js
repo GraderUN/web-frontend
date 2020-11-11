@@ -36,11 +36,11 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
-    },
+    },/*
     https:{
       key: fs.readFileSync('./certs/vue.key'),
       cert: fs.readFileSync('./certs/vue.crt')
-    },
+    },*/
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {
