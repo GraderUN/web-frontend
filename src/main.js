@@ -46,7 +46,7 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 const httpLink = new HttpLink({
-  uri: 'http://ec2-3-236-110-158.compute-1.amazonaws.com:2000'
+  uri: 'https://ec2-3-236-110-158.compute-1.amazonaws.com:2000'
 })
 
 const apolloClient = new ApolloClient({
