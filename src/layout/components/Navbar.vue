@@ -58,10 +58,13 @@ export default {
         console.log('Hace logout')
         removeToken()
         this.$router.push({ path: 'login' })
+        location.reload(true)
       }).catch(err => {
+        this.$router.push({ path: 'login' })
         this.loading = false
         console.log(err)
       })
+      this.$router.push({ path: 'login' })
     }
   }
 }
