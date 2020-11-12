@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="loginForm" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">Login</h3>
       </div>
 
       <el-form-item prop="username">
@@ -44,8 +44,8 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+        <span style="margin-right:20px;">username: prueba@email.com</span>
+        <span> password: 123456789</span>
       </div>
 
     </el-form>
@@ -54,6 +54,10 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+// eslint-disable-next-line no-unused-vars
+import fireDb from '@/firebase/init'
+import firebase from 'firebase'
+import { setToken } from '@/utils/auth'
 
 export default {
   name: 'Login',
@@ -74,8 +78,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'prueba@email.com',
+        password: '123456789'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -106,20 +110,27 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+      if (this.loginForm) {
+        this.loading = true
+        firebase.auth().signInWithEmailAndPassword(this.loginForm.username, this.loginForm.password)
+          .then(user => {
+            firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+              console.log(idTokenResult.claims.role)
+            }).catch(err => {
+              this.loading = false
+              this.error = err.message()
+            })
+            setToken(user.user.toJSON().stsTokenManager.accessToken)
             this.loading = false
-          }).catch(() => {
+            this.$router.push({ path: '/' })
+          }).catch(err => {
             this.loading = false
+            this.error = err.message()
           })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      } else {
+        console.log('error submit!!')
+        return false
+      }
     }
   }
 }

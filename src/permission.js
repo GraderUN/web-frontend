@@ -21,12 +21,14 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
+    console.log('tiene token')
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
+      next({ path: '/login' })
+      /*     const hasGetUserInfo = store.getters.name
       if (hasGetUserInfo) {
         next()
       } else {
@@ -42,11 +44,10 @@ router.beforeEach(async(to, from, next) => {
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }
-      }
+      }*/
     }
   } else {
-    /* has no token*/
-
+    console.log('no tiene token')
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()

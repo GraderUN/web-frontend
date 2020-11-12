@@ -13,7 +13,7 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-import '@/permission' // permission control
+// import '@/permission' // permission control
 import { createProvider } from './vue-apollo'
 
 // import { createProvider } from './vue-apollo';
