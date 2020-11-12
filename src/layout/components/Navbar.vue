@@ -56,7 +56,7 @@ export default {
     logout() {
       removeToken()
       this.$router.push({ path: 'login' })
-
+      location.reload(true)
     }
   }
 }
