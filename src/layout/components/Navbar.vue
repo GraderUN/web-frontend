@@ -1,16 +1,18 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <span>{{ user }}</span>
+          <img :src="'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
+          <el-dropdown-item>
+            {{ user }}
+          </el-dropdown-item>
           <router-link to="/">
             <el-dropdown-item>
               Home
@@ -19,7 +21,7 @@
           <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+          <a target="1_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
@@ -35,10 +37,15 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { removeToken, removeRol } from '@/utils/auth'
 import firebase from 'firebase'
-import { removeToken, setToken } from '@/utils/auth'
 
 export default {
+  data() {
+    return {
+      user: null
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger
@@ -54,10 +61,22 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     logout() {
-      removeToken()
-      this.$router.push({ path: 'login' })
+      firebase.auth().signOut().then(() => {
+        removeToken()
+        removeRol()
+        this.$router.replace('login')
+      })
       location.reload(true)
     }
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user.email
+      } else {
+        this.user = null
+      }
+    })
   }
 }
 </script>
