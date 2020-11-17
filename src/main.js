@@ -34,7 +34,7 @@ import VueApollo from 'vue-apollo'
  * please remove it before going online ! ! !
  */
 
-let app = null
+const app = null
 
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')

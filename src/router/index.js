@@ -50,6 +50,7 @@ export const constantRoutes = [
     name: 'dashboard',
     component: Layout,
     redirect: '/dashboard',
+    meta: { title: 'Dashboard', icon: 'dashboard', requiresAuth: true },
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
@@ -75,7 +76,7 @@ export const constantRoutes = [
         path: 'student',
         name: 'Student',
         component: () => import('@/views/schedule/student/studentGrades'),
-        meta: { title: 'Student', icon: 'table', requiresAuth: true, student: true, roles: ['student']}
+        meta: { title: 'Student', icon: 'table', requiresAuth: true, student: true, roles: ['student'] }
       },
       {
         path: 'scheduleTeacher',
@@ -95,33 +96,36 @@ export const constantRoutes = [
   {
     path: '/cursos',
     component: Layout,
+    meta: { title: 'Cursos', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [{
       path: 'courses',
       name: 'courses',
       component: () => import('@/views/courses/index'),
-      meta: { title: 'Cursos', icon: 'table', requiresAuth: true, roles: ['admin'] }
+      meta: { title: 'Courses', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
     }]
   },
 
   {
     path: '/salones',
     component: Layout,
+    meta: { title: 'Salones', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [{
       path: 'classrooms',
       name: 'classrooms',
       component: () => import('@/views/classrooms/index'),
-      meta: { title: 'Salones', icon: 'table', requiresAuth: true }
+      meta: { title: 'Classrooms', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
     }]
   },
 
   {
     path: '/clases',
     component: Layout,
+    meta: { title: 'Clases', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [{
       path: 'classes',
       name: 'classes',
       component: () => import('@/views/classes/index'),
-      meta: { title: 'Clases', icon: 'table', requiresAuth: true }
+      meta: { title: 'Classes', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
     }]
   },
 
@@ -130,35 +134,31 @@ export const constantRoutes = [
     path: '/subject',
     component: Layout,
     name: 'Subject',
-    meta: {
-      title: 'Subject',
-      icon: 'nested',
-      requiresAuth: true
-    },
+    meta: { title: 'Subject', icon: 'nested', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [
       {
         path: 'form',
         name: 'Form',
         component: () => import('@/views/subject/form'),
-        meta: { title: 'Subject Form', icon: 'form', requiresAuth: true }
+        meta: { title: 'Subject Form', icon: 'form', requiresAuth: true, roles: ['admin', 'teacher'] }
       },
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/subject/list'),
-        meta: { title: 'Subject List', icon: 'table', requiresAuth: true }
+        meta: { title: 'Subject List', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
       },
       {
         path: 'teacherform',
         name: 'Teacher Form',
         component: () => import('@/views/subject/teacherform'),
-        meta: { title: 'Teacher Form', icon: 'form', requiresAuth: true }
+        meta: { title: 'Teacher Form', icon: 'form', requiresAuth: true, roles: ['admin', 'teacher'] }
       },
       {
         path: 'teacherlist',
         name: 'Teacher List',
         component: () => import('@/views/subject/teacherlist'),
-        meta: { title: 'Teacher List', icon: 'user', requiresAuth: true }
+        meta: { title: 'Teacher List', icon: 'user', requiresAuth: true, roles: ['admin', 'teacher'] }
       }
     ]
   },
@@ -166,17 +166,13 @@ export const constantRoutes = [
     path: '/user',
     component: Layout,
     name: 'User',
-    meta: {
-      title: 'User',
-      icon: 'nested',
-      requiresAuth: true
-    },
+    meta: { title: 'User', icon: 'nested', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [
       {
         path: 'details',
         name: 'User Details',
         component: () => import('@/views/user/details'),
-        meta: { title: 'User Details', icon: 'user', requiresAuth: true }
+        meta: { title: 'User Details', icon: 'user', requiresAuth: true, roles: ['admin', 'teacher'] }
       }
     ]
   },

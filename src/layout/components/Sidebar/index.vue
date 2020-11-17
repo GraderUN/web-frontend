@@ -32,11 +32,26 @@ export default {
       'sidebar'
     ]),
     routes() {
-      console.log(this.$router.options.routes[0])
-      return this.$router.options.routes
+      const arr = []
+      const rol = getRol()
+      let j = 0
+
+      for (let i = 0; i < this.$router.options.routes.length; i++) {
+        if (!this.$router.options.routes[i].meta) {
+          arr[j] = this.$router.options.routes[i]
+          j++
+        } else if (this.$router.options.routes[i].meta.roles) {
+          if (this.$router.options.routes[i].meta.roles.includes(rol)) {
+            arr[j] = this.$router.options.routes[i]
+            j++
+          }
+        }
+      }
+      return arr
     },
     activeMenu() {
       const route = this.$route
+      console.log(route)
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
