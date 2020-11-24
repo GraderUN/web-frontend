@@ -59,6 +59,20 @@ export const constantRoutes = [
     }]
   },
 
+  // {
+  //   path: '/ranking',
+  //   name: 'ranking',
+  //   component: Layout,
+  //   redirect: '/ranking',
+  //   meta: { title: 'Ranking', icon: 'dashboard', requiresAuth: true, roles: ['student', 'teacher'] },
+  //   children: [{
+  //     path: 'ranking',
+  //     name: 'Ranking',
+  //     component: () => import('@/views/ranking/index'),
+  //     meta: { title: 'Ranking', icon: 'tree', requiresAuth: true, roles: ['student', 'teacher'] }
+  //   }]
+  // },
+
   {
     path: '/schedule',
     component: Layout,
