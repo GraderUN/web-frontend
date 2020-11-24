@@ -10,7 +10,7 @@
         icon="el-icon-refresh"
         @click="updateList"
       >
-        Update
+        Update Ranking
       </el-button>
       <el-table border :data="allPuntajes">
         <el-table-column type="index" label="#" width="50" />
