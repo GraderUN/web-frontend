@@ -11,6 +11,8 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+import firebase from 'firebase'
+import firebaseApp from '@/firebase/init'
 
 import '@/icons' // icon
 // import '@/permission' // permission control
@@ -31,6 +33,8 @@ import VueApollo from 'vue-apollo'
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
+
+const app = null
 
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
@@ -61,11 +65,16 @@ const apolloProvider = new VueApollo({
   defaultClient: apolloClient
 })
 
-new Vue({
-  el: '#app',
-  apolloProvider,
-  router,
-  store,
-  apolloProvider: createProvider(),
-  render: h => h(App)
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    new Vue({
+      el: '#app',
+      apolloProvider,
+      router,
+      store,
+      apolloProvider: createProvider(),
+      render: h => h(App)
+    })
+  }
 })
+

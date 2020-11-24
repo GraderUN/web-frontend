@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import firebase from 'firebase'
 Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import { getRol } from '@/utils/auth'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -33,6 +34,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
+    name: 'login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
@@ -45,13 +47,15 @@ export const constantRoutes = [
 
   {
     path: '/',
+    name: 'dashboard',
     component: Layout,
     redirect: '/dashboard',
+    meta: { title: 'Dashboard', icon: 'dashboard', requiresAuth: true },
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: 'dashboard', requiresAuth: true }
     }]
   },
 
@@ -60,29 +64,31 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/',
     name: 'Schedule',
-    meta: { title: 'Schedule', icon: 'el-icon-s-help' },
+    meta: { title: 'Schedule', icon: 'el-icon-s-help', requiresAuth: true, roles: ['student', 'teacher'] },
     children: [
       {
         path: 'scheduleStudent',
         name: 'ScheduleStudent',
         component: () => import('@/views/schedule/student/schedule'),
-        meta: { title: 'ScheduleStudent', icon: 'table' }
+        meta: { title: 'ScheduleStudent', icon: 'table', requiresAuth: true, student: true, roles: ['student'] }
       },
       {
         path: 'student',
         name: 'Student',
-        component: () => import('@/views/schedule/student/studentGrades')
+        component: () => import('@/views/schedule/student/studentGrades'),
+        meta: { title: 'Student', icon: 'table', requiresAuth: true, student: true, roles: ['student'] }
       },
       {
         path: 'scheduleTeacher',
         name: 'scheduleTeacher',
         component: () => import('@/views/schedule/teacher/schedule'),
-        meta: { title: 'ScheduleTeacher', icon: 'table' }
+        meta: { title: 'ScheduleTeacher', icon: 'table', requiresAuth: true, teacher: true, roles: ['teacher'] }
       },
       {
         path: 'EditStudentGrades',
         name: 'EditStudentGrades',
-        component: () => import('@/views/schedule/teacher/EditStudentGrades')
+        component: () => import('@/views/schedule/teacher/EditStudentGrades'),
+        meta: { title: 'EditStudentGrades', icon: 'table', requiresAuth: true, teacher: true, roles: ['teacher'] }
       }
     ]
   },
@@ -90,33 +96,36 @@ export const constantRoutes = [
   {
     path: '/cursos',
     component: Layout,
+    meta: { title: 'Cursos', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [{
       path: 'courses',
       name: 'courses',
       component: () => import('@/views/courses/index'),
-      meta: { title: 'Cursos', icon: 'table' }
+      meta: { title: 'Courses', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
     }]
   },
 
   {
     path: '/salones',
     component: Layout,
+    meta: { title: 'Salones', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [{
       path: 'classrooms',
       name: 'classrooms',
       component: () => import('@/views/classrooms/index'),
-      meta: { title: 'Salones', icon: 'table' }
+      meta: { title: 'Classrooms', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
     }]
   },
 
   {
     path: '/clases',
     component: Layout,
+    meta: { title: 'Clases', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [{
       path: 'classes',
       name: 'classes',
       component: () => import('@/views/classes/index'),
-      meta: { title: 'Clases', icon: 'table' }
+      meta: { title: 'Classes', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
     }]
   },
 
@@ -125,34 +134,31 @@ export const constantRoutes = [
     path: '/subject',
     component: Layout,
     name: 'Subject',
-    meta: {
-      title: 'Subject',
-      icon: 'nested'
-    },
+    meta: { title: 'Subject', icon: 'nested', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [
       {
         path: 'form',
         name: 'Form',
         component: () => import('@/views/subject/form'),
-        meta: { title: 'Subject Form', icon: 'form' }
+        meta: { title: 'Subject Form', icon: 'form', requiresAuth: true, roles: ['admin', 'teacher'] }
       },
       {
         path: 'list',
         name: 'List',
         component: () => import('@/views/subject/list'),
-        meta: { title: 'Subject List', icon: 'table' }
+        meta: { title: 'Subject List', icon: 'table', requiresAuth: true, roles: ['admin', 'teacher'] }
       },
       {
         path: 'teacherform',
         name: 'Teacher Form',
         component: () => import('@/views/subject/teacherform'),
-        meta: { title: 'Teacher Form', icon: 'form' }
+        meta: { title: 'Teacher Form', icon: 'form', requiresAuth: true, roles: ['admin', 'teacher'] }
       },
       {
         path: 'teacherlist',
         name: 'Teacher List',
         component: () => import('@/views/subject/teacherlist'),
-        meta: { title: 'Teacher List', icon: 'user' }
+        meta: { title: 'Teacher List', icon: 'user', requiresAuth: true, roles: ['admin', 'teacher'] }
       }
     ]
   },
@@ -160,16 +166,13 @@ export const constantRoutes = [
     path: '/user',
     component: Layout,
     name: 'User',
-    meta: {
-      title: 'User',
-      icon: 'nested'
-    },
+    meta: { title: 'User', icon: 'nested', requiresAuth: true, roles: ['admin', 'teacher'] },
     children: [
       {
         path: 'details',
         name: 'User Details',
         component: () => import('@/views/user/details'),
-        meta: { title: 'User Details', icon: 'user' }
+        meta: { title: 'User Details', icon: 'user', requiresAuth: true, roles: ['admin', 'teacher'] }
       }
     ]
   },
@@ -185,6 +188,30 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
+
+router.beforeEach((to, from, next) => {
+  const user = firebase.auth().currentUser
+  const rol = getRol()
+  const auth = to.matched.some(record => record.meta.requiresAuth)
+  const roles = to.meta.roles
+  if (auth) {
+    if (user) {
+      if (roles) {
+        if (roles.includes(rol)) {
+          next()
+        } else {
+          next({ name: 'dashboard' })
+        }
+      } else {
+        next()
+      }
+    } else {
+      next({ name: 'login' })
+    }
+  } else {
+    next()
+  }
+})
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {

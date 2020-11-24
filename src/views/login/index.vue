@@ -54,10 +54,8 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-// eslint-disable-next-line no-unused-vars
-import fireDb from '@/firebase/init'
 import firebase from 'firebase'
-import { setToken } from '@/utils/auth'
+import { setToken, setRol } from '@/utils/auth'
 
 export default {
   name: 'Login',
@@ -115,7 +113,7 @@ export default {
         firebase.auth().signInWithEmailAndPassword(this.loginForm.username, this.loginForm.password)
           .then(user => {
             firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-              console.log(idTokenResult.claims.role)
+              setRol(idTokenResult.claims.role)
             }).catch(err => {
               this.loading = false
               this.error = err.message()
