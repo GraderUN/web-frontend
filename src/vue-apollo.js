@@ -9,7 +9,7 @@ Vue.use(VueApollo)
 const AUTH_TOKEN = 'apollo-token'
 
 // Http endpoint
-const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'https://ec2-3-238-177-238.compute-1.amazonaws.com:2000'
+const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'https://18.233.87.39:2000'
 
 // Config
 const defaultOptions = {
