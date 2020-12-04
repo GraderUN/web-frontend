@@ -52,7 +52,7 @@ Vue.config.productionTip = false
 const GATEWAY = getEnv('VUE_APP_GATEWAY')
 
 const httpLink = new HttpLink({
-  uri: GATEWAY
+  uri: `'${GATEWAY}'`
 })
 
 const apolloClient = new ApolloClient({
