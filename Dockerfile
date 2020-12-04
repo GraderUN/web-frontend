@@ -2,11 +2,11 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+
 RUN npm ci
 COPY . .
 
-RUN npm run build:prod
+
 RUN ./node_modules/.bin/vue-cli-service build --mode production
 
 # production stage
