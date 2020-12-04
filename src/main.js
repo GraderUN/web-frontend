@@ -54,8 +54,6 @@ console.log(`Gateway: '${GATEWAY}'`)
 const httpLink = new HttpLink({
   uri: `'${GATEWAY}'`
 })
-console.log(`'${GATEWAY}'`)
-console.log(httpLink)
 
 const apolloClient = new ApolloClient({
   link: httpLink,
