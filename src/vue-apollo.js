@@ -1,15 +1,16 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
+import getEnv from '@/utils/env'
 
 // Install the vue plugin
 Vue.use(VueApollo)
 require('dotenv').config()
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
-
+const GATEWAY = getEnv('VUE_APP_GATEWAY')
 // Http endpoint
-const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:5000'
+const httpEndpoint = GATEWAY || 'http://localhost:5000'
 
 // Config
 const defaultOptions = {

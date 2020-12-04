@@ -54,6 +54,8 @@ const GATEWAY = getEnv('VUE_APP_GATEWAY')
 const httpLink = new HttpLink({
   uri: `'${GATEWAY}'`
 })
+console.log(`'${GATEWAY}'`)
+console.log(httpLink)
 
 const apolloClient = new ApolloClient({
   link: httpLink,
