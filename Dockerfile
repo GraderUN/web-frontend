@@ -3,9 +3,11 @@ FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+RUN npm ci
 COPY . .
-ARG VUE_APP_GRAPHQL_HTTP='https://18.233.87.39:2000'
+
 RUN npm run build:prod
+RUN ./node_modules/.bin/vue-cli-service build --mode production
 
 # production stage
 FROM nginx:stable-alpine as production-stage
