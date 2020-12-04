@@ -114,11 +114,11 @@ export default {
           .then(user => {
             firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
               setRol(idTokenResult.claims.role)
+              setToken(idTokenResult.token)
             }).catch(err => {
               this.loading = false
               this.error = err.message()
             })
-            setToken(user.user.toJSON().stsTokenManager.accessToken)
             this.loading = false
             this.$router.push({ path: '/' })
           }).catch(err => {

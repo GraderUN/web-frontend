@@ -24,7 +24,7 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import VueApollo from 'vue-apollo'
-
+import dotenv from 'dotenv'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -33,9 +33,8 @@ import VueApollo from 'vue-apollo'
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
-
+dotenv.config()
 const app = null
-
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
@@ -50,9 +49,10 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 const httpLink = new HttpLink({
-  uri: 'https://18.233.87.39:2000'
+  uri: process.env.VUE_APP_GATEWAY
 })
-
+console.log(httpLink)
+console.log(process.env.VUE_APP_GATEWAY)
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
