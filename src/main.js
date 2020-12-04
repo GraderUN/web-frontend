@@ -5,7 +5,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
-
+import getEnv from '@/utils/env'
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -13,7 +13,7 @@ import store from './store'
 import router from './router'
 import firebase from 'firebase'
 import firebaseApp from '@/firebase/init'
-require('dotenv').config();
+require('dotenv').config()
 import '@/icons' // icon
 // import '@/permission' // permission control
 import { createProvider } from './vue-apollo'
@@ -25,6 +25,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import VueApollo from 'vue-apollo'
 import dotenv from 'dotenv'
+import Logo from '@/layout/components/Sidebar/Logo'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -48,9 +49,7 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-const GATEWAY = '{{ API_URL }}'
-
-console.log(GATEWAY)
+const GATEWAY = getEnv('VUE_APP_VARIABLE_1')
 
 const httpLink = new HttpLink({
   uri: process.env.VUE_APP_ENV_GATEWAY || 'GATEWAY' || process.env.VUE_APP_ENV_GATEWAY1
@@ -59,6 +58,8 @@ console.log(httpLink)
 console.log('$VUE_APP_ENV_GATEWAY')
 console.log(process.env.VUE_APP_ENV_GATEWAY)
 console.log(process.env.VUE_APP_ENV_GATEWAY1)
+console.log('GATEWAY:')
+console.log(GATEWAY)
 
 const apolloClient = new ApolloClient({
   link: httpLink,
