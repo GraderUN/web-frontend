@@ -48,12 +48,18 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
+const GATEWAY = '{{ API_URL }}'
+
+console.log(GATEWAY)
+
 const httpLink = new HttpLink({
-  uri: process.env.VUE_APP_ENV_GATEWAY || process.env.VUE_APP_ENV_GATEWAY1
+  uri: process.env.VUE_APP_ENV_GATEWAY || 'GATEWAY' || process.env.VUE_APP_ENV_GATEWAY1
 })
 console.log(httpLink)
+console.log('$VUE_APP_ENV_GATEWAY')
 console.log(process.env.VUE_APP_ENV_GATEWAY)
 console.log(process.env.VUE_APP_ENV_GATEWAY1)
+
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
