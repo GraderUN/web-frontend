@@ -4,7 +4,7 @@ import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/gra
 
 // Install the vue plugin
 Vue.use(VueApollo)
-
+require('dotenv').config()
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
 

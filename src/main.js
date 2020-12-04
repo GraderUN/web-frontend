@@ -13,7 +13,7 @@ import store from './store'
 import router from './router'
 import firebase from 'firebase'
 import firebaseApp from '@/firebase/init'
-
+require('dotenv').config();
 import '@/icons' // icon
 // import '@/permission' // permission control
 import { createProvider } from './vue-apollo'
