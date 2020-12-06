@@ -9,9 +9,9 @@ require('dotenv').config()
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
 const GATEWAY = getEnv('VUE_APP_VARIABLE_1')
-const PORT = getEnv('VUE_APP_VARIABLE_2')
+// const PORT = getEnv('VUE_APP_VARIABLE_2')
 // Http endpoint
-const httpEndpoint = `${GATEWAY}:${PORT}` || 'NOSEPASAPETICION'
+const httpEndpoint = `${GATEWAY}` || 'NOSEPASAPETICION'
 
 // Config
 const defaultOptions = {
