@@ -48,10 +48,25 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
-
+// window?.configs?.[name] || process.env[name]
 const GATEWAY = getEnv('VUE_APP_VARIABLE_1')
+const GATEWAY2 = window?.configs?.VUE_APP_VARIABLE_2
+const GATEWAY3 = process.env.VUE_APP_VARIABLE_3
+const GATEWAY4 = window?.configs?.VUE_APP_VARIABLE_4
+const GATEWAY5 = process.env.VUE_APP_VARIABLE_5
 // const PORT = getEnv('VUE_APP_VARIABLE_2')
 console.log(`Gateway: '${GATEWAY}'`)
+console.log('GATEWAY1:')
+console.log(GATEWAY)
+console.log('GATEWAY2:')
+console.log(GATEWAY2)
+console.log('GATEWAY3:')
+console.log(GATEWAY3)
+console.log('GATEWAY4:')
+console.log(GATEWAY4)
+console.log('GATEWAY5:')
+console.log(GATEWAY5)
+
 const httpLink = new HttpLink({
   uri: `${GATEWAY}`
 })
