@@ -50,9 +50,10 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 const GATEWAY = getEnv('VUE_APP_VARIABLE_1')
-console.log(`Gateway: '${GATEWAY}'`)
+const PORT = getEnv('VUE_APP_VARIABLE_2')
+console.log(`Gateway: '${GATEWAY}' Port: ${PORT}`)
 const httpLink = new HttpLink({
-  uri: `'${GATEWAY}'`
+  uri: `'${GATEWAY}:${PORT}'`
 })
 
 const apolloClient = new ApolloClient({
