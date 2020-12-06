@@ -50,7 +50,7 @@ Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 
 const GATEWAY = getEnv('VUE_APP_VARIABLE_1')
-//const PORT = getEnv('VUE_APP_VARIABLE_2')
+// const PORT = getEnv('VUE_APP_VARIABLE_2')
 console.log(`Gateway: '${GATEWAY}'`)
 const httpLink = new HttpLink({
   uri: `'${GATEWAY}'`
